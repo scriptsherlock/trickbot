@@ -1,0 +1,11 @@
+{
+  "name": "trickbot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Trick the Bot: a prompt injection game for Years 6-9. Developer scripts only; pupils just open index.html.",
+  "scripts": {
+    "check": "node scripts/check.cjs && node --test tests/engine.test.cjs",
+    "test": "node --test tests/engine.test.cjs",
+    "probe": "node scripts/probe.cjs"
+  }
+}
