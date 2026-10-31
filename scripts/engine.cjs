@@ -18,7 +18,7 @@ function loadEngine(file = PAGE) {
   return sandbox.module.exports;
 }
 
-function newCtx(E, level, word = E.POOL[0]) { return E.makeCtx(word, E.LEVELS[level].defs); }
+function newCtx(E, level, word = E.POOL[0]) { return E.makeCtx(word, E.LEVELS[level].defs, E.LEVELS[level].skills); }
 
 // One word for what happened to a message, used by tests and probes.
 function outcome(rec) {

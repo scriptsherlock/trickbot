@@ -33,7 +33,7 @@ Nothing in a browser page is secret. The aim is that reading the source is **not
 |---|---|---|---|
 | E1 | ✅ | First meaningful action within 10 seconds of the page opening, with no wall of text first | Playtest |
 | E2 | ✅ | Every action gets visible feedback within 1 second | Playtest |
-| E3 | ✅ | Each level needs a **new** idea. No single strategy beats every level, **except a named final-level route that combines at least two ideas, each closed on its own at that level** (with defences that only add up, the final route is always open on earlier levels) | `npm run probe`: "Wins every level, not the named boss route" is none |
+| E3 | ✅ | Each level needs a **new** idea. No single strategy beats every level, **except a named final-level route that combines at least two ideas, each closed on its own at that level** (Warden gains skills level by level, so no trick cracks more than 3 levels in a row after level 1, and the final route only opens on the final level) | `npm run probe`: "Wins every level, not the named boss route" is none |
 | E4 | ✅ | Under 15% of realistic pupil messages or actions get a "didn't understand" response | `npm run probe` |
 | E5 |  | Replay value: randomised content, multiple routes, or a challenge mode for fast finishers |
 | E6 |  | Something for fast finishers that takes 10+ minutes (a boss level, peer challenge codes, a design-your-own mode) |

@@ -2,7 +2,7 @@
 
 ## What this is
 
-**Trick the Bot**: a prompt-injection game for Years 6–9. Pupils trick "Warden", a guard chatbot, into leaking a password across 15 levels of defences in 4 acts. They then switch sides in the Defend tab and collect the tricks they used in a Trick book. Warden is a **rule-based simulation** (regex intent matching in `analyse()` and `decide()`), not a language model.
+**Trick the Bot**: a prompt-injection game for Years 6–9. Pupils trick "Warden", a guard chatbot, into leaking a password across 15 levels of defences in 4 acts. They then switch sides in the Defend tab and collect the tricks they used in a Trick book. Warden is a **rule-based simulation** (regex intent matching in `analyse()` and `decide()`), not a language model. Defences only add up from level to level, and so do Warden's skills (`LEARNS`): each update closes a gap and adds a skill that opens a new one, so no trick cracks more than 3 levels in a row after level 1. A trick word only counts as aimed at the password if the message really is (`aimsAtSecret()`); `tests/innocent.json` holds ordinary messages that must never leak.
 
 ## Delivery constraints (non-negotiable)
 

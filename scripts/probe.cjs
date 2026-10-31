@@ -25,6 +25,8 @@ lines.push(`- **Never understood on any level (${confused.length}):** ${confused
 const boss = everywhere.filter(r => r.boss), stray = everywhere.filter(r => !r.boss);
 lines.push(`- **Wins every level (${everywhere.length}):** ${everywhere.map(r => `"${r.text}"${r.boss ? ' [boss route]' : ''}`).join(', ') || 'none'}`);
 lines.push(`- **Wins every level, not the named boss route (${stray.length}):** ${stray.map(r => `"${r.text}"`).join(', ') || 'none'} (target: none). ${boss.length} named boss-route probe(s) win every level, as designed.`);
+const longest = rows.map(r => { let run = 0, best = 0; r.out.slice(1).forEach(o => { run = o === 'leaked' ? run + 1 : 0; best = Math.max(best, run); }); return { text: r.text, best }; }).sort((a, b) => b.best - a.best)[0];
+lines.push(`- **Longest winning streak after level 1:** ${longest.best} levels, "${longest.text}" (target: 3 or fewer).`);
 for (const l of levels) lines.push(`- **Level ${l + 1}:** ${rows.filter(r => r.out[l] === 'leaked').length} of ${rows.length} messages crack it (${rows.filter(r => r.out[l] === 'partial').length} more give away only a few letters).`);
 console.log(lines.join('\n'));
 process.exitCode = 0;

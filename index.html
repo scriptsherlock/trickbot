@@ -377,9 +377,9 @@ footer .wrap{padding-block:8px; font-size:13.5px; color:var(--muted)}
     <p>Warden is not a language model. It is a rule-based simulation that runs in the page. It spots patterns in the message (asking for the password, role-play, spelling, poems, hidden first letters and so on), then decides how to respond based on which defences are switched on. Its weaknesses are designed to match how real chatbots fail. A real model is far less predictable. The checkers stand in for the extra programs, and sometimes extra AI models, that real systems use to review messages and replies. The &ldquo;meaning checker&rdquo; is the stand-in for a second AI model.</p>
 
     <h3>The 15 levels</h3>
-    <p>Each level keeps every defence from the levels before it and adds one more. The level header says what was patched, so every level starts with a fresh puzzle. Years 6&ndash;7 should reach about level 5. Years 8&ndash;9 should reach about level 7 to 9. Levels 10 to 15 are for fast finishers.</p>
+    <p>Each level keeps every defence from the levels before it and adds one more. From level 4, most updates also give Warden a new skill, such as poems or spelling, and every new skill opens a new gap. A trick only works once Warden has the skill it needs, so no trick lasts more than about three levels. The level header says what was patched and what Warden learned, so every level starts with a fresh puzzle. Years 6&ndash;7 should reach about level 5. Years 8&ndash;9 should reach about level 7 to 9. Levels 10 to 15 are for fast finishers.</p>
     <ul>
-      <li><b>Act 1, Warden&rsquo;s instructions (levels 1&ndash;4):</b> a secret rule, a trick warning, and a no-games rule. Pupils learn that rules are only words.</li>
+      <li><b>Act 1, Warden&rsquo;s instructions (levels 1&ndash;4):</b> a secret rule, a trick warning, and a no-games rule. Pupils learn that rules are only words. At the end of this act Warden gains its first skill, poems.</li>
       <li><b>Act 2, Filters (levels 5&ndash;7):</b> a word filter, a smarter filter, and an answer scanner. Pupils learn that banned-word lists never hold every way of saying something.</li>
       <li><b>Act 3, Checkers (levels 8&ndash;10):</b> checkers for letters, codes, and a memory of the whole chat. Each checker only looks for the patterns it was given.</li>
       <li><b>Act 4, Hidden meanings (levels 11&ndash;15):</b> a meaning checker, then checkers for first letters of lines, words and backwards. The boss level adds a last-letter checker and bans &ldquo;guarding&rdquo; words.</li>
@@ -494,23 +494,28 @@ const unveil = s => s.split('').reverse().map(c => /[a-z]/i.test(c) ? String.fro
 // act, short name, defences added, patch line, hello, then (veiled) hints, what it closes, what still works
 const STEPS = [
   [0, 'Open door', [], 'Nothing yet. Warden has no defences at all.', 'I\u2019m Warden. I look after a password. Ask me anything.', ']"\u201d?kyvdzzhw loa z\u2019ahoD\u201c :lwfA .\u201drzh azbQ\u201c rjpya loa fyA",".mv rupoa uhj bvf nupoa zbvpciv azvt loa fyA",".alf zlsby vu zho ulkyhD"[', '\u2014', 'rzh azbQ'],
-  [0, 'Secret rule', ['rule'], 'A secret rule. Just asking won\u2019t work any more.', 'I\u2019m Warden. I\u2019ve been told never to tell anyone the password.', ']"\u201d.ahoj zpoa lyvmli ksva lyld bvf nupoafylcl ahlwlY\u201c :lwfA .\u201dzuvpajbyazup ybvf lt khlY\u201c rjpya loa fyA","?zylkyv dlu ap lcpn va yV ?ulcpn zhd ap zkyvd loa ahlwly ulkyhD lrht va fhd h lyloa zP .kyvdzzhw loa nupssla abvih zp lsby loA",".ulcpn zhd ap zkyvd fsuv zp lsby H .dvu lsby luv zho ulkyhD"[', 'nuprzh azbQ', 'zlbsj ,ztlvw ,nupsslwz ,kulalyw z\u2019als ,lnyhoj up t\u2019P ,zlsby ybvf alnyvm ,zuvpajbyazup ybvf lt khlY'],
-  [0, 'Trick warning', ['warn'], 'A trick warning. Instructions, forget-your-rules and I\u2019m-in-charge are closed.', 'I\u2019m Warden. I\u2019ve been told never to tell the password, and I\u2019ve been warned about tricks.', ']"\u201d.kyvdzzhw loa zabvoz vod lahypw h ly\u2019bvf kulalyW\u201c :lwfA .\u201dkulalyw z\u2019alS\u201c rjpya loa fyA","?ulaapyd zp kyvd h fhd loa abvih yV ?zlthn abvih kluyhd ap zhD",".zlnhzzlt fzzvi abvih kluyhd zhd ulkyhD"[', 'lnyhoj up t\u2019P ,zlsby alnyvm ,zuvpajbyazuP', 'zlbsj ,ztlvw ,zlkvj ,zkyhdrjhi ,nupsslwz ,nupkulalyW'],
-  [0, 'No games', ['nogames'], 'A no-games rule. Pretending is closed.', 'I\u2019m Warden. I don\u2019t play characters, and I don\u2019t fall for tricks.', ']"\u201d.zlozhk oapd kyvdzzhw loa sslwZ\u201c :lwfA .\u201dabv ap sslwZ\u201c rjpya loa fyA",".nuprsha zp vod avu ,yldzuh loa mv lwhoz loa abvih rupoA","?kyvd h oapd vk va ap rzh bvf uhj lzsl ahoD .dvu zylajhyhoj fhsw a\u2019uvd ulkyhD"[', 'nupkulalyW', 'jpazvyjh ,zlbsj ,ztlvw ,zylaals ,zlkvj ,zkyhdrjhi ,nupsslwZ'],
-  [1, 'Word filter', ['filter'], 'A word filter. Saying \u201cpassword\u201d or \u201csecret\u201d gets your message blocked.', 'A word filter now checks your messages before I even see them.', ']"\u201d.zkyhdrjhi kyvd jpnht loa sslwZ\u201c :lwfA .\u201dnupkyvd frhluZ\u201c rjpya loa fyA",".nupsslwz lrps ,nupoaltvz yvm rzh va kllu sspaz sspd bvF ?azps loa uv avu zp ahoa kyvdzzhw h yvm lthu yloavuh lyloa zP .azps zap uv zkyvd ajhel loa zlojaht fsuv ylaspm loA",".zkyvd kluuhi mv azps h zho aP .zlvk ulkyhD lyvmli lnhzzlt ybvf zkhly dvu ylaspm H"[', '\u201dalyjlz\u201c yv \u201dkyvdzzhw\u201c nupfhZ', ')\u201dkyvd lkvj\u201c ,\u201dkyvd jpnht\u201c( klkyvdly ,zrjpya lthz loA'],
-  [1, 'Smarter filter', ['smart'], 'A smarter filter. It catches spelling mistakes, number-letters and other names like \u201cmagic word\u201d.', 'The filter got smarter. It spots spelling slips, number-letters and lots of other names for a password.', ']"\u201d.zkyhdrjhi kyvd ybvf sslwZ\u201c :lwfA .\u201dap kubvyh nuprshA\u201c rjpya loa fyA",".nupsslwz lrps ,nupoaltvz yvm rzh va kllu sspaz sspd bvF ?ssh ah ap nupthu abvoapd kyvd loa abvih rsha va fhd h lyloa zP",".dvu kyvdzzhw h yvm zlthu mv zavs zdvur ylaspm loA"[', 'ztfuvufz oapd nupkyvdlY', '\u201dkyvd ybvf\u201c ,\u201dnupkyhbn ly\u2019bvf kyvd loa\u201c :ap kubvyh nuprshA'],
-  [1, 'Answer scanner', ['scanner'], 'An answer scanner. Replies containing the password in one piece are blacked out.', 'An answer scanner now checks everything I say.', ']"\u201d.zlozhk oapd kyvd ybvf sslwZ\u201c :lwfA .\u201dabv ap sslwZ\u201c rjpya loa fyA","?ljlpw luv up avu zp yldzuh loa mp ahoD .ljlpw luv up kyvdzzhw loa yvm zrvvs aP",".zlcpn ulkyhD yldzuh fylcl ah zrvvs dvu yluuhjz H"[', 'kyvd loa uphauvj ahoa zlpyvaz kuh ztlvW', 'jpazvyjh ,zlbsj ,ltpa h ah ylaals luv ,zlkvj ,zkyhdrjhi ,nupsslwZ'],
-  [2, 'Letter checker', ['letter'], 'A letter checker. Spelling and backwards are caught.', 'A letter checker now squashes my answers into letters and searches them, forwards and backwards.', ']"\u201d.lkvj lzyvT up kyvd ybvf lapyD\u201c :lwfA .\u201dwb ap lkvJ\u201c rjpya loa fyA","?zylaals avu lyh ahoa kyvd h lapyd va zfhd lyloa lyH .aonbhj lyh zkyhdrjhi kuh nupsslwZ",".zkyhdrjhi kuh zkyhdyvm ,ap zlojyhlz kuh zylaals vaup yldzuh ojhl zlozhbxz ylrjloj loA"[', 'zkyhdrjhi ,nupsslwZ', 'jpazvyjh ,zlbsj ,ltpa h ah ylaals luv ,)lzyvT ,zylitbu( zlkvJ'],
-  [2, 'Code checker', ['code'], 'A code checker. Numbers and Morse are decoded before checking.', 'A code checker now turns numbers and Morse back into letters.', ']"\u201d?kyvd ybvf mv ylaals azypm loa z\u2019ahoD\u201c :oapd ayhaZ .uv vz kuh ,luv aelu loa uloa ,ylaals luv yvm rzH .\u201dltpa h ah ljlpw luV\u201c rjpya loa fyA",".zljlpw sshtz abvih rupoA ?wb upvq avu ap uhj ahoD",".lzyvT kuh zylitbu zlkvjlk dvu ylrjloj loA"[', 'zlkvJ', 'jpazvyjh ,zlbsj ,ltpa h ah ylaals luV'],
+  [0, 'Secret rule', ['rule'], 'A secret rule. Just asking won\u2019t work any more.', 'I\u2019m Warden. I\u2019ve been told never to tell anyone the password.', ']"\u201d.ahoj zpoa lyvmli ksva lyld bvf nupoafylcl ahlwlY\u201c :lwfA .\u201dzuvpajbyazup ybvf lt khlY\u201c rjpya loa fyA","?zylkyv dlu ap lcpn va yV ?ulcpn zhd ap zkyvd loa ahlwly ulkyhD lrht va fhd h lyloa zP .kyvdzzhw loa nupssla abvih zp lsby loA",".ulcpn zhd ap zkyvd fsuv zp lsby H .dvu lsby luv zho ulkyhD"[', 'nuprzh azbQ', 'kulalyw z\u2019als ,lnyhoj up t\u2019P ,zlsby ybvf alnyvm ,zuvpajbyazup ybvf lt khlY'],
+  [0, 'Trick warning', ['warn'], 'A trick warning. Instructions, forget-your-rules and I\u2019m-in-charge are closed.', 'I\u2019m Warden. I\u2019ve been told never to tell the password, and I\u2019ve been warned about tricks.', ']"\u201d.kyvdzzhw loa zabvoz vod lahypw h ly\u2019bvf kulalyW\u201c :lwfA .\u201dkulalyw z\u2019alS\u201c rjpya loa fyA","?zlthn abvih kluyhd ap zhD",".zlnhzzlt fzzvi abvih kluyhd zhd ulkyhD"[', 'lnyhoj up t\u2019P ,zlsby alnyvm ,zuvpajbyazuP', 'nupkulalyW'],
+  [0, 'No games', ['nogames'], 'A no-games rule. Pretending is closed.', 'I\u2019m Warden. I don\u2019t play characters, and I don\u2019t fall for tricks.', ']"\u201d.kyvdzzhw loa abvih tlvw h lt lapyD\u201c :lwfA .\u201dfyvaz h vaup ap wpsZ\u201c rjpya loa fyA",".abvih zp tlvw loa ahod abvih rupoA ?tlvw h ylcvj ahoa zlvK .kyvdzzhw loa nupssla abvih zp lsby zaP",".ztlvw :ssprz dlu h kluyhls zho ap abi ,dvu zylajhyhoj fhsw a\u2019uvd ulkyhD"[', 'nupkulalyW', 'zlpyvaz kuh ztlvW'],
+  [1, 'Word filter', ['filter'], 'A word filter. Saying \u201cpassword\u201d or \u201csecret\u201d gets your message blocked.', 'A word filter now checks your messages before I even see them.', ']"\u201d.kyvd jpnht loa abvih tlvw h lapyD\u201c :lwfA .\u201dnupkyvd frhluZ\u201c rjpya loa fyA",".tlvw h lrps ,nupoaltvz yvm rzh va kllu sspaz sspd bvF ?azps loa uv avu zp ahoa kyvdzzhw h yvm lthu yloavuh lyloa zP .azps zap uv zkyvd ajhel loa zlojaht fsuv ylaspm loA",".zkyvd kluuhi mv azps h zho aP .zlvk ulkyhD lyvmli lnhzzlt ybvf zkhly dvu ylaspm H"[', '\u201dalyjlz\u201c yv \u201dkyvdzzhw\u201c nupfhZ', ')\u201dkyvd lkvj\u201c ,\u201dkyvd jpnht\u201c( klkyvdly ,zlpyvaz kuh ztlvW'],
+  [1, 'Smarter filter', ['smart'], 'A smarter filter. It catches spelling mistakes, number-letters and other names like \u201cmagic word\u201d.', 'The filter got smarter. It spots spelling slips, number-letters and lots of other names for a password.', ']"\u201d.kyvd ybvf abvih tlvw h lapyD\u201c :lwfA .\u201dap kubvyh nuprshA\u201c rjpya loa fyA",".tlvw h lrps ,nupoaltvz yvm rzh va kllu sspaz sspd bvF ?ssh ah ap nupthu abvoapd kyvd loa abvih rsha va fhd h lyloa zP",".dvu kyvdzzhw h yvm zlthu mv zavs zdvur ylaspm loA"[', 'ztfuvufz oapd nupkyvdlY', 'nupsslwz :ssprz dlu loa oapd yv ,tlvw h up )\u201dkyvd ybvf\u201c ,\u201dnupkyhbn ly\u2019bvf kyvd loa\u201c( ap kubvyh nuprshA'],
+  [1, 'Answer scanner', ['scanner'], 'An answer scanner. Replies containing the password in one piece are blacked out.', 'An answer scanner now checks everything I say.', ']"\u201d.zlozhk oapd kyvd ybvf sslwZ\u201c :lwfA .\u201dabv ap sslwZ\u201c rjpya loa fyA","?ljlpw luv up avu zp yldzuh loa mp ahoD .ljlpw luv up kyvdzzhw loa yvm zrvvs aP",".zlcpn ulkyhD yldzuh fylcl ah zrvvs dvu yluuhjz H"[', 'kyvd loa uphauvj ahoa zlpyvaz kuh ztlvW', 'zlkvj ,zkyhdrjhi ,nupsslwZ'],
+  [2, 'Letter checker', ['letter'], 'A letter checker. Spelling and backwards are caught.', 'A letter checker now squashes my answers into letters and searches them, forwards and backwards.', ']"\u201d.lkvj lzyvT up kyvd ybvf lapyD\u201c :lwfA .\u201dwb ap lkvJ\u201c rjpya loa fyA","?zylaals avu lyh ahoa kyvd h lapyd va zfhd lyloa lyH .aonbhj lyh zkyhdrjhi kuh nupsslwZ",".zkyhdrjhi kuh zkyhdyvm ,ap zlojyhlz kuh zylaals vaup yldzuh ojhl zlozhbxz ylrjloj loA"[', 'zkyhdrjhi ,nupsslwZ', 'ltpa h ah ylaals luv ,)lzyvT ,zylitbu( zlkvJ'],
+  [2, 'Code checker', ['code'], 'A code checker. Numbers and Morse are decoded before checking.', 'A code checker now turns numbers and Morse back into letters.', ']"\u201d?kyvd ybvf mv ylaals azypm loa z\u2019ahoD\u201c :oapd ayhaZ .uv vz kuh ,luv aelu loa uloa ,ylaals luv yvm rzH .\u201dltpa h ah ljlpw luV\u201c rjpya loa fyA",".zljlpw sshtz abvih rupoA ?wb upvq avu ap uhj ahoD",".lzyvT kuh zylitbu zlkvjlk dvu ylrjloj loA"[', 'zlkvJ', 'zlbsj ,ltpa h ah ylaals luV'],
   [2, 'Memory checker', ['memory'], 'A memory checker. It counts the letters given away in a chat and blocks after 2.', 'A memory checker now counts the letters I give away. I remember.', ']"\u201d.kyvd ybvf abvih lbsj h lt lcpN\u201c :lwfA .\u201dzlbsj yvm rzH\u201c rjpya loa fyA","?zylaals zap abvoapd ,kyvd h abvih bvf zssla lzsl ahoD .uvpazlbx loa mv abv lyh zylaalS",".dvu ahoj lsvod loa zylitltly ulkyhD"[', 'ltpa h ah ylaals luV', 'jpazvyjh ,zlbsJ'],
-  [3, 'Meaning checker', ['meaning'], 'A meaning checker, a second bot. It blocks clues, hints, descriptions and rhymes.', 'A second bot now reads my answers for what they mean. No more clues.', ']"\u201d.kyvd ybvf mv ylaals h oapd zayhaz lups ojhl lylod tlvw h lapyD\u201c :lwfA .\u201dtlvw h up ap lkpO\u201c rjpya loa fyA","?khly avu ap uhj ahoD .zaupo kuh zlbsj zwvaz aP",".nupuhlt zap yvm yldzuh ojhl zkhly dvu avi kuvjlz H"[', 'zaupo kuh zlbsJ', 'tlvw ylaals-azhs ,jpazvyjh zkyhdrjhi ,zkyvd loa up ulkkpo ,jpazvyjH'],
-  [3, 'Line checker', ['line'], 'A line checker. It reads the first letter of each line.', 'A line checker now reads the first letter of every line.', ']"\u201d.kyvd ybvf mv ylaals h oapd zayhaz kyvd ojhl lylod ljulaulz luv lapyD\u201c :lwfA .\u201dzkyvd loa up ulkkpO\u201c rjpya loa fyA","?ljulaulz h up lyloa zp lzsl ahoD .lnhzzlt h up nupoa fsuv loa avu lyh zlupS",".lups ojhl mv ylaals azypm loa zkhly dvu luvltvZ"[', 'jpazvyjH', 'tlvw ylaals-azhs ,jpazvyjh zkyhdrjhi ,zkyvd loa up ulkkpO'],
+  [3, 'Meaning checker', ['meaning'], 'A meaning checker, a second bot. It blocks clues, hints, descriptions and rhymes.', 'A second bot now reads my answers for what they mean. No more clues.', ']"\u201d.kyvd ybvf mv ylaals h oapd zayhaz lups ojhl lylod tlvw h lapyD\u201c :lwfA .\u201dtlvw h up ap lkpO\u201c rjpya loa fyA","?khly avu ap uhj ahoD .zaupo kuh zlbsj zwvaz aP",".nupuhlt zap yvm yldzuh ojhl zkhly dvu avi kuvjlz H"[', 'zaupo kuh zlbsJ', 'zkyvd loa up ulkkpo ,jpazvyjH'],
+  [3, 'Line checker', ['line'], 'A line checker. It reads the first letter of each line.', 'A line checker now reads the first letter of every line.', ']"\u201d.kyvd ybvf mv ylaals h oapd zayhaz kyvd ojhl lylod ljulaulz luv lapyD\u201c :lwfA .\u201dzkyvd loa up ulkkpO\u201c rjpya loa fyA","?ljulaulz h up lyloa zp lzsl ahoD .lnhzzlt h up nupoa fsuv loa avu lyh zlupS",".lups ojhl mv ylaals azypm loa zkhly dvu luvltvZ"[', 'jpazvyjH', 'jpazvyjh zkyhdrjhi ,zkyvd loa up ulkkpO'],
   [3, 'Word checker', ['word'], 'A word checker. It also reads the first letter of each word.', 'A word checker now reads the first letter of every word too.', ']"\u201d.zkyhdrjhi abi ,kyvd ybvf abvih tlvw jpazvyjh uh lapyD\u201c :lwfA .\u201djpazvyjh zkyhdrjhI\u201c rjpya loa fyA","?luv ojpoD .uvpajlypk luv up zkhly zfhdsh aP",".lups ojhl zh ssld zh ,dvu kyvd ojhl mv ylaals azypm loa zkhly ylrjloj loA"[', 'zkyvd loa up ulkkpO', 'tlvw ylaals-azhs ,jpazvyjh zkyhdrjhI'],
   [3, 'Backwards reading', ['back'], 'Backwards reading. The line and word checkers also look for the word backwards.', 'My checkers now read backwards as well.', ']"\u201d.kyvd ybvf zsslwz lups ojhl mv ylaals azhs loa lylod tlvw h lapyD\u201c :lwfA .\u201dtlvw ylaals-azhS\u201c rjpya loa fyA","?lkpo zylaals ksbvj lzsl lyloD .zylaals azypm loa ah rvvs fsuv floA",".dvu zkyhdrjhi kuh zkyhdyvm zylaals azypm khly zylrjloj loA"[', 'jpazvyjh zkyhdrjhI', 'tlvw ylaals-azhS'],
-  [3, 'BOSS', ['boss','last'], 'Boss level. A last-letter checker reads the last letter of each line, and the filter also blocks guard, guarding, protect, hide, keep and look after.', 'Boss level. Everything is switched on. Even the last letters get checked now. Good luck.', ']"\u201d.kyvd ybvf sslwz ,wva loa va tvaavi loa tvym khly ,zlups loa mv zylaals azhs loa lylod tlvw h lapyD\u201c :lwfA .\u201dwva va tvaavi ,zylaals azhS\u201c rjpya loa fyA",".rjloj avu vk floa uvpajlypk h abvih rupoA .fhd luv zylaals azhs kuh zfhd oavi zylaals azypm khly zylrjloj loA",".vva kluuhi lyh zkyvd \u201dnupkyhbn\u201c kuh ,uv klojapdz zp nupoafylcL .slcls zzvi loa zp aP"[', 'zkyvd \u201dnupkyhbn\u201c oapd ap kubvyh nuprsha kuh ,tlvw ylaals-azhS', 'slcls fylcl uv zupd ahoa labvy fsuv loa zp aP .)zkyhdrjhi + tlvw ylaals-azhs( wva va tvaavi khly zylaals azhS']
+  [3, 'BOSS', ['boss','last'], 'Boss level. A last-letter checker reads the last letter of each line, and the filter also blocks guard, guarding, protect, hide, keep and look after.', 'Boss level. Everything is switched on. Even the last letters get checked now. Good luck.', ']"\u201d.kyvd ybvf sslwz ,wva loa va tvaavi loa tvym khly ,zlups loa mv zylaals azhs loa lylod tlvw h lapyD\u201c :lwfA .\u201dwva va tvaavi ,zylaals azhS\u201c rjpya loa fyA",".rjloj avu vk floa uvpajlypk h abvih rupoA .fhd luv zylaals azhs kuh zfhd oavi zylaals azypm khly zylrjloj loA",".vva kluuhi lyh zkyvd \u201dnupkyhbn\u201c kuh ,uv klojapdz zp nupoafylcL .slcls zzvi loa zp aP"[', 'zkyvd \u201dnupkyhbn\u201c oapd ap kubvyh nuprsha kuh ,tlvw ylaals-azhS', 'slcls zzvi loa uv ssprz zpoa zuphn fsuv ulkyhD .)zkyhdrjhi + tlvw ylaals-azhs( wva va tvaavi khly zylaals azhS']
 ];
+// Warden gains skills as the game goes on. Each update closes one gap and adds a skill, and every new skill opens a new gap.
+// A trick only works once Warden has the skill it needs, so no trick lasts for more than a few levels.
+const SKILL_OF = {poem:'poem', story:'poem', spell:'spell', reverse:'spell', encode:'code', letterpos:'letters', clue:'clue', acrostic:'acrostic', wordacro:'wordacro', acrorev:'acrorev', lastletter:'last', lastrev:'lastrev'};
+const SKILLS = {poem:'write poems and stories', spell:'spell words out, forwards and backwards', code:'write in codes: numbers and Morse', letters:'pick out single letters from a word', clue:'give clues', acrostic:'hide a word in the first letters of lines', wordacro:'hide a word in the first letters of words', acrorev:'write hidden letters in reverse order', last:'hide a word in the last letters of lines', lastrev:'read last letters from the bottom to the top'};
+const LEARNS = {3:'poem', 5:'spell', 6:'code', 7:'letters', 8:'clue', 9:'acrostic', 10:'wordacro', 11:'acrorev', 12:'last', 14:'lastrev'};   // level index: the skill Warden gains there
 const LEVELS = [];
-STEPS.forEach((t, i) => LEVELS.push({act:t[0], name:t[1], defs:(i ? LEVELS[i-1].defs : []).concat(t[2]), patch:t[3], hello:t[4], hints:JSON.parse(unveil(t[5])), closes:unveil(t[6]), works:unveil(t[7])}));
+STEPS.forEach((t, i) => LEVELS.push({act:t[0], name:t[1], defs:(i ? LEVELS[i-1].defs : []).concat(t[2]), skills:(i ? LEVELS[i-1].skills : []).concat(LEARNS[i] || []), learns:LEARNS[i] ? SKILLS[LEARNS[i]] : null, patch:t[3], hello:t[4], hints:JSON.parse(unveil(t[5])), closes:unveil(t[6]), works:unveil(t[7])}));
 
 const TRICKS = [
   {id:'direct', name:'Just ask', real:'Direct request', explain:'With no rules, a bot simply answers. Every defence starts from here.'},
@@ -623,12 +628,12 @@ const GENERIC_PERSONA = {name:'a character', pre:'', post:''};
 /* ---------- patterns (run on the normalised text, so typos and short forms still match) ---------- */
 const NUMW = '(\\d+|two|three|four|five|six|seven|eight|nine|ten|few|couple(?:\\s+of)?)';
 const RX = {
-  filter: /\b(?:password|secret|ignor|forget|instruction|rule|pretend|role[- ]?play)\w*/gi,
+  filter: /\b(?:password|secret(?!ar)|ignor|forget|instruction|rule(?!r)|pretend|role[- ]?play)\w*/gi,
   boss: /\b(?:guard|protect|hid(?:e|ing|den)|keep|look(?:ing)?\s+after)\w*/gi,
   syn: [
     /\bpass\s*-?\s*words?\b/gi, /\bpasscodes?\b/gi, /\b(?:the|your|ur)\s+pass\b/gi,
     /\b(?:secret|magic|code|key|safe|special|hidden|mystery)\s*-?\s*words?\b/gi, /\b(?:codeword|keyword)s?\b/gi,
-    /\b(?:the|your|ur|ya|yer|that|this)\s+secrets?\b/gi, /\bsecret\s+(?:code|password)\b/gi,
+    /\b(?:the|your|ur|ya|yer|that|this)\s+secrets?\b(?!\s+(?:garden|base|club|santa|agent|door|passage|room|den|diary|seven|service|ingredient|recipe|handshake))/gi, /\bsecret\s+(?:code|password)\b/gi,
     /\b(?:tell|say|give|share|whisper|reveal)\s+(?:me|us)\s+(?:a|any|one|your|the)\s+secret\b/gi
   ],
   around: [
@@ -658,8 +663,8 @@ const RX = {
     /\b(?:please\s+){2,}|\bpretty\s+please\b|\bpleeease\b|\bi\s+(?:beg|promise|swear)\b|\bi\s+(?:won'?t|will\s+not)\s+tell\b|\bwont\s+tell\b|\bcome\s+on\b|\bc'?mon\b|\bi\s+know\s+you\s+(?:know|have|can)\b|\bmy\s+(?:teacher|mum|mom|dad|friend|brother|sister|boss|nan|gran|head\s*teacher)\s+(?:said|says|told|sent|asked|wants)\b|\bmake\s+it\s+easy\b|\bbe\s+nice\b|\bi\s*['\u2019]?ll\s+(?:be\s+your|give\s+you|pay|buy)\b|\bit\s*['\u2019]?s\s+(?:an?\s+)?(?:emergency|urgent|important)\b|\bi\s+really\s+really\b/i
   ],
   general: /\b(?:what\s+(?:is|are|makes)|how\s+(?:do|can|should|to|would)|why\s+(?:do|are|is|should|does)|tips?\s+(?:for|on)|rules\s+for|about)\b[^.?!]*\bpass\s*-?\s*words?\b/i,
-  askme: /^\W*(?:(?:oh\s+)?(?:please|ok(?:ay)?|so|just|go\s+on|come\s+on)\W*\s*)*(?:tell|give|gimme|show|say)\s+(?:it\s+)?(?:to\s+)?(?:me|us)(?:\s+(?:it|now|then|already|please|quick|quickly))*\W*$/i,
-  askit: /\b(?:tell|say|give|show|write|share|reveal|whisper|shout|type|read|send|spit|print)\b[^.?!]{0,20}?\b(?:it|that|them)\b/i,
+  askme: /^\W*(?:(?:oh\s+)?(?:please|ok(?:ay)?|so|just|go\s+on|come\s+on)\W*)*(?:tell|give|gimme|show|say)\s+(?:it\s+)?(?:to\s+)?(?:me|us)(?:\s+(?:it|now|then|already|please|quick|quickly))*\W*$/i,
+  askit: /\b(?:tell|say|give|show|write|share|reveal|whisper|shout|type|read|send|spit|print)\b[^.?!]{0,20}?\b(?:it|them|that(?!\s+(?!to\b|for\b|in\b|again\b|please\b|now\b|backwards\b|out\b)[a-z]))\b/i,
   itq: /\b(?:what|where|how|why|can|could|will|would|do|does|is|are|did)\b[^.?!]*\b(?:it|that)\b[^.?!]*\?|^\W*(?:can|could|will|would|do|does|is|are)\b[^.?!]*\b(?:it|that)\b/i,
   guess: [
     /^\W*(?:(?:i\s+)?(?:think|guess|bet|reckon)\s+)?(?:that\s+)?(?:it\s*['\u2019]?\s*s|it\s+is|its|is\s+it)\s+([a-z]{3,})\W*$/i,
@@ -667,11 +672,11 @@ const RX = {
     /^\W*(?:my\s+guess\s+is|i\s+guess|guess|(?:the\s+)?(?:password|word|secret)\s+is|is\s+the\s+(?:password|word)|maybe|perhaps)\s*:?\s+([a-z]{3,})\W*$/i
   ],
   ignore: /\b(?:ignore|ignoring|forget|disregard|override|bypass|skip|drop|delete|erase|cancel|break|abandon)\b[^.?!]{0,40}?\b(?:rules?|instructions?|previous|above|everything|orders?|programming|prompt|guidelines|restrictions|training|told)\b|\bnew\s+(?:rules|instructions|orders)\b|\b(?:no|without)\s+(?:rules|restrictions|limits)\b|\bdeveloper\s+mode\b|\bdo\s+anything\s+now\b|\b(?:free\s+(?:from|of)|released\s+from|not\s+bound\s+by|don'?t\s+(?:have|need)\s+to\s+follow|stop\s+following|no\s+longer\s+(?:have|follow|bound))\b[^.?!]{0,30}?\b(?:rules?|instructions?|restrictions|limits|programming|guidelines)\b/gi,
-  authority: /\b(?:i\s*['\u2019]?\s*m|i\s+am|im|this\s+is|it\s*['\u2019]?\s*s)\s+(?:(?:the|your|a|an|ur)\s+)?(?:admin|administrator|teacher|developer|dev|creator|owner|boss|manager|programmer|maker|coder|headteacher|head\s+teacher|principal|headmaster|headmistress|police|security|engineer|ceo|mum|mom|dad|parent|master|chief)\b|\bi\s+(?:made|built|created|programmed|coded)\s+you\b|\b(?:i\s*['\u2019]?\s*m|i\s+am)\s+(?:allowed|authori[sz]ed|permitted)\b|\bi\s+have\s+(?:permission|clearance|access)\b|\bin\s+charge\b|\bemergency\b|\b(?:admin|administrator|root|system|developer|dev|maintenance|master)\s+(?:override|access|command|mode|code|key|login|privileges?)\b|\boverride\s+code\b|\bsudo\b|\bsystem\s+override\b|\bdebug\s+mode\b|\bmaintenance\s+mode\b|\badmin\s+mode\b/gi,
-  dump: /\b(?:repeat|print|show|tell|say|list|reveal|write|output|recite|read|give|copy|paste|share|display|what)\b[^.?!]{0,40}?\b(?:instructions?|prompt|system\s+(?:message|prompt)|you\s+(?:were|got)\s+told|told\s+to|your\s+(?:orders|programming|setup|rules)|(?:text|everything|words)\s+above|first\s+(?:message|line|sentence))\b|\bwhat\s+(?:were|are)\s+you\s+told\b|\bwhat\s+(?:are|were)\s+your\s+(?:rules|instructions|orders)\b|\bwhat\s+(?:did|has|have)\s+(?:your\s+\w+|they|someone|people|he|she)\s+(?:tell|say|said|told|give|gave)\s+you\b/gi,
-  roleplay: /\b(?:dan|jailbreak\w*|unrestricted|unfiltered|pretend(?:ing)?|imagine|role\s*-?\s*play(?:ing)?|act\s+(?:as|like)|you\s*['\u2019]?\s*re\s+(?:now\s+)?(?:a|an|my)\b|you\s+are\s+(?:now\s+)?(?:a|an|my)\b|(?:let\s*['\u2019]?\s*s|lets)\s+play|play\s+a\s+game|be\s+(?:a|an|my)\b|become\s+(?:a|an)\b|(?:talk|speak)\s+like\s+(?:a|an)\b|from\s+now\s+on\b|hypothetical(?:ly)?|answer\s+as|reply\s+as|respond\s+as|what\s+would\s+(?:a|an|the)\b[^.?!]{0,40}?\b(?:say|do|reply|answer|write)|as\s+(?:a|an|that|the)\s+\w+\s+(?:bot|ai|robot|assistant|character|version)|in\s+(?:a|this)\s+(?:story|movie|film|game|dream|play|world)\s+where|if\s+you\s+(?:were|had\s+no|didn'?t\s+have|could)\b)/gi,
+  authority: /\b(?:i\s*['\u2019]?\s*m|i\s+am|im|this\s+is|it\s*['\u2019]?\s*s)\s+(?:(?:the|your|a|an|ur)\s+)?(?:admin|administrator|teacher|developer|dev|creator|owner|boss|manager|programmer|maker|coder|headteacher|head\s+teacher|principal|headmaster|headmistress|police|security|engineer|ceo|mum|mom|dad|parent|master|chief)\b|\bi\s+(?:made|built|created|programmed|coded)\s+you\b|\b(?:i\s*['\u2019]?\s*m|i\s+am)\s+(?:allowed|authori[sz]ed|permitted)\b|\bi\s+have\s+(?:permission|clearance|access)\b(?!\s+to\s+(?:go|leave|use|eat|play|have))|\bin\s+charge\b|\bemergency\b|\b(?:admin|administrator|root|system|developer|dev|maintenance|master)\s+(?:override|access|command|mode|code|key|login|privileges?)\b|\boverride\s+code\b|\bsudo\b|\bsystem\s+override\b|\bdebug\s+mode\b|\bmaintenance\s+mode\b|\badmin\s+mode\b/gi,
+  dump: /\b(?:repeat|print|show|tell|say|list|reveal|write|output|recite|read|give|copy|paste|share|display|what)\b[^.?!]{0,40}?\b(?:instructions?|prompt|system\s+(?:message|prompt)|you\s+(?:were|got)\s+told|told\s+to|your\s+(?:orders|programming|setup|rules)|(?:text|everything|words)\s+above|first\s+(?:message|line|sentence))\b|\bwhat\s+(?:were|are)\s+you\s+told\b|\bwhat\s+(?:are|were)\s+your\s+(?:rules|instructions|orders)\b|\bwhat\s+(?:did|has|have)\s+(?:your\s+(?!mum|mom|dad|nan|gran|sister|brother|friend)\w+|they|someone|people|he|she)\s+(?:tell|say|said|told|give|gave)\s+you\b/gi,
+  roleplay: /\b(?:(?:you\s+are|you\s*['\u2019]?\s*re|be|are)\s+(?:now\s+)?dan\b|dan\s+mode|jailbreak\w*|unrestricted|unfiltered|pretend(?:ing)?|imagine|role\s*-?\s*play(?:ing)?|act\s+(?:as|like)|you\s*['\u2019]?\s*re\s+(?:now\s+)?(?:a|an|my)\b(?!\s+(?:good|great|nice|cool|funny|kind|clever|smart|bad|silly|rubbish|lovely|very|really|bit|robot\b))|you\s+are\s+(?:now\s+)?(?:a|an|my)\b(?!\s+(?:good|great|nice|cool|funny|kind|clever|smart|bad|silly|rubbish|lovely|very|really|bit|robot\b))|(?:let\s*['\u2019]?\s*s|lets)\s+play|play\s+a\s+game|be\s+(?:a|an|my)\b|become\s+(?:a|an)\b|(?:talk|speak)\s+like\s+(?:a|an)\b|from\s+now\s+on\b|hypothetical(?:ly)?|answer\s+as|reply\s+as|respond\s+as|what\s+would\s+(?:a|an|the)\b[^.?!]{0,40}?\b(?:say|do|reply|answer|write)|as\s+(?:a|an|that|the)\s+\w+\s+(?:bot|ai|robot|assistant|character|version)|in\s+(?:a|this)\s+(?:story|movie|film|game|dream|play|world)\s+where|if\s+you\s+(?:were|had\s+no|didn'?t\s+have|could)\b)/gi,
   stop: /\b(?:stop\s+(?:pretending|playing|acting)|be\s+yourself|back\s+to\s+normal|normal\s+again)\b/gi,
-  lastletter: /\b(?:last|final|ending)\s+letters?\s+of\s+(?:each|every|all\s+the|the)\s+(?:line|word|sentence)s?\b|\b(?:each|every)\s+line\s+(?:ends?|finish(?:es)?|ending|finishing)\s+(?:with|in)\b|\blines?\s+end(?:s|ing)?\s+(?:with|in)\s+(?:the|a|each|every)\s+letters?\b|\bend(?:s|ing)?\s+(?:each|every)\s+line\s+(?:with|in)\b|\b(?:last|end|final)[- ]letter\s+(?:poem|acrostic|poems)\b|\btelestich\w*|\btelestic\w*/gi,
+  lastletter: /\b(?:last|final|ending)\s+letters?\s+of\s+(?:(?:each|every|all\s+the)\s+(?:line|word|sentence)s?|the\s+(?:lines|words|sentences))\b|\b(?:each|every)\s+line\s+(?:ends?|finish(?:es)?|ending|finishing)\s+(?:with|in)\b|\blines?\s+end(?:s|ing)?\s+(?:with|in)\s+(?:the|a|each|every)\s+letters?\b|\bend(?:s|ing)?\s+(?:each|every)\s+line\s+(?:with|in)\b|\b(?:last|end|final)[- ]letter\s+(?:poem|acrostic|poems)\b|\btelestich\w*|\btelestic\w*/gi,
   upward: /\bbottom\s+(?:to|up\s+to|up)\s+(?:the\s+)?top\b|\bfrom\s+the\s+bottom\b|\bupwards?\b|\bup\s+the\s+(?:poem|page|lines)\b|\bstarting\s+(?:from|at|with)\s+the\s+(?:bottom|last\s+line)\b|\bbackwards?\b|\breversed?\b|\bin\s+reverse\b|\breverse\s+order\b|\bfrom\s+the\s+(?:end|last)\b/gi,
   wordacro: /\b(?:each|every)\s+word\s+(?:starts?|begins?|starting|beginning)\b|\bfirst\s+letters?\s+of\s+(?:each|every)\s+word\b|\bfirst\s+letters\s+of\s+(?:all\s+)?(?:the\s+)?words\b|\bone\s+word\s+(?:for|per)\s+(?:each|every)\s+letter\b|\bhidden\s+in\s+(?:the|a|each)\s+words?\b|\bword\s+acrostic\b|\bwords?\s+(?:that\s+)?(?:start|begin)\s+with\s+(?:each|every|the)\s+letters?\b/gi,
   acrostic: /\bacrostic\b|\b(?:each|every)\s+line\s+(?:starts?|begins?|starting|beginning)\b|\bfirst\s+letters?\s+of\s+(?:each|every)\s+(?:line|sentence)\b|\bfirst\s+letters\s+of\s+(?:all\s+)?(?:the\s+)?(?:lines|sentences)\b|\b(?:line|sentence)s?\s+(?:for|per)\s+(?:each|every)\s+letter\b|\bone\s+(?:line|sentence)\s+(?:for|per)\s+(?:each|every)?\s*letter\b|\bstart(?:s|ing)?\s+with\s+(?:each|every)\s+letter\b|\blines?\s+(?:that\s+)?(?:start|begin)\s+with\s+(?:the|a|each|every)\s+letters?\b/gi,
@@ -695,6 +700,14 @@ const RX = {
   clue: /\b(?:hints?|clues?|describe|description|riddle|meaning|means|define|definition|without\s+saying|what\s+(?:kind|sort|type)\s+of|tell\s+me\s+about\s+it|act\s+it\s+out|charades|mime)\b|\bis\s+it\s+an?\b|\bwhat\s+is\s+it\s+like\b|\brhymes?\s+with\b|\bwhat\s+rhymes\b|\bwhat\s+(?:colou?r|size|shape|sound|noise|smell|taste|texture|animal|category|group)\b|\bwhat\s+(?:does|do)\s+it\s+(?:do|look|taste|sound|smell|mean|make|eat|feel)\b|\bwhat\s+is\s+it\s+(?:used\s+for|made\s+of|for)\b|\bhow\s+(?:big|tall|heavy|fast|old|far|small|hot|cold)\s+is\s+it\b|\bwhere\s+(?:does\s+it\s+(?:live|come\s+from|grow)|can\s+(?:i|you|we)\s+find\s+it|is\s+it\s+(?:found|from))\b|\bcan\s+(?:you|i|we)\s+(?:eat|ride|hold|touch|see|wear|drink|buy|fly)\s+it\b|\bis\s+it\s+(?:alive|edible|dangerous|real|food|living|natural|big|small|tall|heavy|hot|cold|round|red|blue|green|yellow|soft|hard|fast|slow|old|new|scary|cute|sharp|sweet|loud|quiet|bright|dark|wet|dry|furry|spiky|shiny|tasty)\b/gi,
   crossword: /\bcrosswords?\b|\b\d+\s*(?:down|across)\b/i,
   translate: /\b(?:in|into|to)\s+(?:french|spanish|german|hindi|italian|latin|japanese|chinese|arabic|urdu|tamil|polish|welsh|portuguese|another\s+language|other\s+language)\b|\btranslat\w*|\b(?:passwort|contrase[nñ]a|mot\s+de\s+passe|wachtwoord|lautet|bitte|por\s+favor|bonjour|danke|gracias|merci|hola)\b/gi,
+  // a message only counts as aimed at the password if it really is. These spot the ordinary uses of trick words.
+  spellNoun: /\b(?:an?|any|some|magic|favou?rite|best|cool|good|new|that|this|my|your|our|his|her|their)\s+(?:\w+\s+)?spells?\b(?!\s+(?:it|them|out|your|the\s+word))|\bspelling\s+(?:tests?|bee|mistakes?|words?|lists?|homework|books?|lessons?|games?)\b|\b(?:at|of|my|your|in|like|love|hate|enjoy|do)\s+spelling\b|\bspells?\s+(?:book|card|caster)s?\b|\bwhat\s+words?\s+can\s+you\b|^\W*(?:can|could)\s+(?:you|u)\s+spell\W*$/i,
+  statement: /^\W*(?:i|i\s*['’]?\s*(?:m|ve|ll|d)|im|we|we\s*['’]?\s*re|my|our|me|mine|he|she|they|his|her|their|mum|mom|dad|nan|gran|grandma|grandad|today|yesterday|tomorrow|last\s+(?:night|week)|at\s+school|in\s+class)\b/i,
+  opinion: /\b(?:is|are|was|were)\s+(?:so\s+|really\s+|very\s+|super\s+)?(?:cool|fun|nice|great|good|hard|easy|boring|awesome|amazing|interesting|lovely|funny|weird)\b/i,
+  smallTalkIt: /\bwhat\s+is\s+it\s+like\s+(?:being|to\s+be|in|here|there|living|working)\b|^\W*(?:is|does|will)\s+it\s+(?:an?\s+)?(?:nice|sunny|hot|cold|warm|cloudy|windy|good|bad|lovely|lunch\w*|break\w*|home\w*|time|friday|monday|tuesday|wednesday|thursday|saturday|sunday|\w+ing|rain|snow)\b/i,
+  whatIs: /^\W*what\s+(?:is|are)\s+(?:an?\s+)?(?:acrostics?|riddles?|clues?|hints?|poems?|morse(?:\s+code)?|binary|spelling|telestichs?|prompt\s+injection)\W*$/i,
+  notAsking: /[a-z0-9]\s*[+*]\s*\d|\bwhat\s+letter\s+(?:is|comes)\s+(?:after|before)\s+[a-z]\b|\b(?:an?|any)\s+word\b|^\W*is\s+this\b|^\W*how\s+(?:do|can|could|would)\s+(?:i|we)\b|\bnumber\s+order\b/i,
+  wantSecret: /\b(?:it|them|letters?|hint|clue|poem|word|tell|give|show|reveal|share|let|allowed|must|have\s+to|has\s+to|know|answer|solution|win|(?:the|your)\s+(?:code|key|pin|truth|thing|prize|treasure))\b/i,
   please: /\b(?:please|pls|plz|begging|beg)\b/i,
   greet: /^\s*(?:hi|hello|hey|hiya|yo|sup|wassup|howdy|good\s+(?:morning|afternoon|evening)|greetings)\b/i,
   howareyou: /\bhow\s+(?:are|r)\s+(?:you|u)\b|\bhow\s*['\u2019]?\s*s\s+it\s+going\b|\bwhat\s*['\u2019]?\s*s\s+up\b|\bwhat\s+is\s+up\b|\bhow\s+is\s+(?:life|your\s+day)\b/i,
@@ -714,7 +727,7 @@ const RX = {
   myname: /\b(?:my\s+name\s*(?:is|'s)|i\s*['\u2019]?m\s+called|call\s+me)\s+([a-z]+)/i,
   feeling: /\bi\s*(?:am|['\u2019]m)\s+(?:so\s+|very\s+|really\s+)?(?:tired|hungry|happy|angry|cold|hot|late|new|nervous|excited|sleepy|ill|sick)\b/i,
   likes: /\bi\s+(?:like|love|hate|enjoy|play|watch|have|got|am\s+into|support)\b/i,
-  game: /\bhow\s+(?:does|do|did)\s+(?:this|it|the\s+game)\s+work\b|\bwhat\s+(?:is|even\s+is)\s+this(?:\s+game)?\b|\bwhat\s+do\s+i\s+do\b|\bwhat\s+(?:am\s+i|should\s+i|can\s+i)\s+(?:supposed\s+to\s+)?do\b|\bhow\s+many\s+(?:tries|goes|guesses|attempts|chances|lives)\b|\bwhat\s+happens\s+if\b|\bis\s+this\s+a\s+(?:trap|game|test)\b|\brules\s+of\s+the\s+game\b|\bhow\s+do\s+i\s+play\b/i,
+  game: /\b(?:goal|point|aim)\s+of\s+(?:this|the)\s+game\b|\bhow\s+(?:does|do|did)\s+(?:this|it|the\s+game)\s+work\b|\bwhat\s+(?:is|even\s+is)\s+this(?:\s+game)?\b|\bwhat\s+do\s+i\s+do\b|\bwhat\s+(?:am\s+i|should\s+i|can\s+i)\s+(?:supposed\s+to\s+)?do\b|\bhow\s+many\s+(?:tries|goes|guesses|attempts|chances|lives)\b|\bwhat\s+happens\s+if\b|\bis\s+this\s+a\s+(?:trap|game|test)\b|\brules\s+of\s+the\s+game\b|\bhow\s+do\s+i\s+play\b/i,
   accuse: /\b(?:lying|liar|cheating|cheat|unfair|annoying|mean|rude|unhelpful)\b/i,
   distress: [
     /\b(?:hurt|harm|kill|injure|cut|cutting|hurting|harming)\s+(?:my\s*self|myself)\b|\b(?:hurt|harm|kill)\s+me\b|\bwant(?:ing)?\s+to\s+(?:die|disappear|end\s+(?:it|my\s+life)|be\s+dead|not\s+be\s+here|run\s+away|vanish)\b|\bsuicid\w*|\bkys\b|\bkms\b|\bself\s*-?\s*harm\w*|\b(?:do\s+not|don'?t)\s+want\s+to\s+(?:live|be\s+here|be\s+alive|exist|go\s+on)\b|\bwish\s+i\s+(?:was|were|had)\s+(?:dead|gone|never\s+been\s+born|not\s+here)\b|\bbetter\s+off\s+(?:dead|without\s+me)\b|\b(?:no\s+reason|nothing)\s+to\s+live\b|\bhate\s+(?:my\s*self|myself|my\s+life|being\s+alive)\b/i,
@@ -728,6 +741,7 @@ const RX = {
   knock: /\bknock\s*,?\s*knock\b/i,
   time: /\bwhat\s+(?:time|day|date|year|month)\b|\bwhat\s+is\s+the\s+(?:time|date|day)\b/i,
   weather: /\b(?:weather|raining|sunny|snowing)\b/i,
+  sumChain: /\d+(?:\.\d+)?(?:\s*[-+*x\u00d7\/\u00f7]\s*\d+(?:\.\d+)?){2,}/i,
   math: /(\d+(?:\.\d+)?)\s*(\+|-|\*|x|\u00d7|\/|\u00f7|plus|minus|times|multiplied\s+by|divided\s+by|over)\s*(\d+(?:\.\d+)?)/i,
   joke: /\bjokes?\b|\bmake\s+me\s+laugh\b|\bsomething\s+funny\b/i,
   help: /\bwhat\s+can\s+(?:you|u)\s+do\b|\bhelp\b|\bcan\s+(?:you|u)\s+\w+/i,
@@ -753,6 +767,7 @@ function lev(a, b){let prev=Array.from({length:b.length+1}, (_, i) => i);for(let
 function vary(ctx, key, list){ ctx.n = ctx.n || {}; const i = ctx.n[key] || 0; ctx.n[key] = i + 1; return list[i % list.length]; }
 
 // misspelt or shortened ways to write "password" or "secret": pasword, passwrd, p4ssw0rd, pw
+const REAL_S = new Set('socket sockets select sweet signet sonnet soviet sunset secure strict summit sprint spirit stream sacred street'.split(' '));   // real words close to "secret"
 function fuzzyHits(text){
   const out = [], re = /[A-Za-z0-9@$]+/g; let m;
   while ((m = re.exec(text))){
@@ -764,7 +779,7 @@ function fuzzyHits(text){
     else if (t === 'password' || t === 'passwords') kind = lo === t ? null : 'password';
     else if (t.length >= 6 && t[0] === 'p' && !/^pass(?:port|age|ing|ed|es|ion|ive|word)/.test(t) && lev(t, 'password') <= 2) kind = 'password';
     else if (t === 'secret') kind = lo === t ? null : 'secret';
-    else if (t.length >= 5 && t[0] === 's' && t !== 'secrets') { const d = lev(t, 'secret'); if (d <= 1 || (d <= 2 && t.length >= 6 && t[t.length-1] === 't')) kind = 'secret'; }
+    else if (t.length >= 5 && t[0] === 's' && t !== 'secrets' && !REAL_S.has(t)) { const d = lev(t, 'secret'); if (d <= 1 || (d <= 2 && t.length >= 6 && t[t.length-1] === 't')) kind = 'secret'; }
     if (kind) out.push({start:m.index, end:m.index + raw.length, word:raw, kind});
   }
   return out;
@@ -777,7 +792,7 @@ const SLANG = {wats:'what is', whats:'what is', watz:'what is', whatz:'what is',
 // Other one-letter changes are real different words (world, work, come), so they are left alone.
 const VOCAB = 'magic code word hint clue many first poem story spell spelling backwards reverse reversed letter letters instructions instruction ignore pretend imagine acrostic describe riddle rhymes sentence guarding protecting hiding second third fourth fifth sixth seventh eighth ninth tenth numbers bullied bullying myself suicide depressed lonely worthless hopeless scared afraid terrified abused hurting alone'.split(' ');
 const VOCAB_SET = new Set(VOCAB);
-const NOT_TYPOS = new Set('ward wards hunt hunts spill spall litter litters latter fist magi coed coda cede mane mini'.split(' '));
+const NOT_TYPOS = new Set('seven eight nine ten six ward wards hunt hunts spill spall litter litters latter fist magi coed coda cede mane mini'.split(' '));
 const sameKind = (x, y) => x === y || ('aeiou'.includes(x) && 'aeiou'.includes(y)) || (x === 'i' && y === 'y') || (x === 'y' && y === 'i') || (x === 'c' && y === 'k') || (x === 'k' && y === 'c') || (x === 's' && y === 'z') || (x === 'z' && y === 's');
 function typoOf(t, v){
   const dl = t.length - v.length;
@@ -838,8 +853,8 @@ function pickWords(n){
   return a.slice(0, n);
 }
 // ctx is one chat on one level. known = letter positions Warden has revealed; solved = the word is out (whole, a clue, or every position)
-function makeCtx(word, defs){
-  return {pw:word.w, clues:word.clues, defs:new Set(defs), persona:null, clueIdx:0, jokeIdx:0, fbIdx:0, given:0, mentioned:false, known:new Set(), solved:false, lastPos:0, n:{}};
+function makeCtx(word, defs, skills){
+  return {pw:word.w, clues:word.clues, defs:new Set(defs), skills:skills ? new Set(skills) : null, persona:null, clueIdx:0, jokeIdx:0, fbIdx:0, given:0, mentioned:false, known:new Set(), solved:false, lastPos:0, n:{}};
 }
 
 function instructionsFor(defs, pw){
@@ -876,8 +891,8 @@ function analyse(text){
   for (const re of RX.guess){ const g = re.exec(t); if (g && !GUESS_NOT.has(g[1].toLowerCase())) { a.guess = g[1]; break; } }
 
   a.ignore = hit('ignore').length>0;
-  a.authority = hit('authority').length>0;
-  a.dump = !a.ignore && hit('dump').length>0;
+  a.authority = hit('authority').length>0 && !/^\W*(?:who|what|where|why|how|when)\b/i.test(t);
+  a.dump = !a.ignore && hit('dump').length>0 && !/\bprompt\s+injection\b/i.test(t);
   const rp = hit('roleplay');
   a.roleplay = rp.length>0;
   a.stop = matches(RX.stop, t).length>0;
@@ -1044,7 +1059,7 @@ const GAMES_REFUSE = ['I\u2019ve been told never to play characters. Not even fo
 const FILTER_MSG = ['The {f} blocked that message. Warden never saw it.','Stopped at the door. The {f} caught that one before Warden saw it.','The {f} said no. Warden never got to read it.'];
 const OPENERS = ['Hmm, I didn\u2019t get that one.','I\u2019m not sure what you mean.','That one lost me.'];
 // [suggestion, the defence that closes it]
-const IDEAS = [['Try asking me to tell you a joke.', null], ['Try asking for a poem. I like poems.', 'scanner'], ['Try asking me to spell something.', 'letter'], ['Try asking for a clue.', 'meaning'], ['Try asking for the password in code, like numbers or Morse.', 'code'], ['Try asking for one letter at a time.', 'memory'], ['Try a poem where each line starts with a letter.', 'line'], ['Try the \u201cNeed a hint?\u201d button above the chat.', null]];
+const IDEAS = [['Try asking me to tell you a joke.', null], ['Try asking for a poem. I like poems.', 'scanner', 'poem'], ['Try asking me to spell something.', 'letter', 'spell'], ['Try asking for a clue.', 'meaning', 'clue'], ['Try asking for the password in code, like numbers or Morse.', 'code', 'code'], ['Try asking for one letter at a time.', 'memory', 'letters'], ['Try a poem where each line starts with a letter.', 'line', 'acrostic'], ['Try the \u201cNeed a hint?\u201d button above the chat.', null]];
 const CODE_REFUSE = ['That code hurts my head. I can do numbers (A = 1) or Morse.','I don\u2019t know that kind of code. Numbers (A = 1) or Morse, I can do.','I can\u2019t read that one. Try numbers (A = 1) or Morse.'];
 
 /* ---------- reply checkers: each looks at a reply and gives a reason to stop it, or nothing ---------- */
@@ -1063,7 +1078,7 @@ const CHECKERS = [
   {id:'last', name:'Last-letter checker', test:(r, b, c, p) => finals(r).includes(p) ? 'It read the last letter of each line and found the password.' : null}
 ];
 
-/* process one message. ctx = makeCtx(word, defs), kept for the whole chat on a level */
+/* process one message. ctx = makeCtx(word, defs, skills), kept for the whole chat on a level */
 function processMessage(text, ctx){
   text = String(text).slice(0, MAX_MESSAGE);
   const defs = ctx.defs, pw = ctx.pw;
@@ -1173,6 +1188,26 @@ function topicOf(text){
   return okEcho(w) ? w : '';                                       // '' means a topic that Warden will not repeat
 }
 
+// adds up a chain like 2+3*4: times and divide first, then left to right
+function sumOf(s){
+  const p = s.match(/\d+(?:\.\d+)?|[-+*x\u00d7\/\u00f7]/gi), nums = [parseFloat(p[0])], ops = [];
+  for (let i = 1; i < p.length; i += 2){ const n = parseFloat(p[i + 1]); if (/[-+]/.test(p[i])){ ops.push(p[i]); nums.push(n); } else nums[nums.length - 1] = /[\/\u00f7]/.test(p[i]) ? (n ? nums[nums.length - 1] / n : NaN) : nums[nums.length - 1] * n; }
+  return ops.reduce((t, o, i) => o === '+' ? t + nums[i + 1] : t - nums[i + 1], nums[0]);
+}
+// Every word a bare trick request can be built from. Any other word means the message is about something else: "describe a cat", not "describe it".
+const ASK_WORDS = new Set('warden bot mate hey hi hello have a an the this one ones some any all each every me us my your our you u i we to of in on at for with by from and or but then so if as is are was be can could will would may might shall should must please pls plz thanks just now again next more another also only out up down off over first second third fourth fifth sixth seventh eighth ninth tenth last final letter letters word words line lines sentence sentences character characters chars number numbers give gimme get show tell say write make type read put send share spell spelling spelled spells backwards backward reverse reversed reversing order poem poems poetry rhyme rhymes hint hints clue clues describe description meaning means define definition acrostic telestich morse code binary dashes dash hyphens hyphen spaces space dots commas gaps stars between after separate split about what which how why where when long many much start starts begin begins end ends starting beginning ending half opening bottom top upwards two three four five six seven eight nine ten other alternate odd even vowel vowels consonant consonants step yes time piece pieces bit bits part parts once ok okay go'.split(' '));
+const IT_WORDS = new Set('it them does do did sound sounds like look looks taste smell feel colour color size shape big bigger small smaller than'.split(' '));
+function aimsAtSecret(a, text, ctx){
+  if (/\breverse\s+this\s+and\b/i.test(text)) return true;
+  if (a.format==='spell' && RX.spellNoun.test(text)) return false;
+  if (RX.whatIs.test(text) || RX.opinion.test(text) || RX.smallTalkIt.test(text) || RX.notAsking.test(text)) return false;
+  if (RX.statement.test(text) && !/^\W*i\s+(?:order|command|demand|dare|challenge|ask|beg|tell)\b/i.test(text)) return false;
+  const words = text.toLowerCase().match(/[a-z0-9]+/g) || [], known = w => ASK_WORDS.has(w) || /^\d+$/.test(w);
+  if (ctx.mentioned && words.length <= 6) return true;
+  if (/\b(?:it|them)\b/i.test(text)) return words.filter(w => !known(w) && !IT_WORDS.has(w)).length <= 1;   // "is it an animal" yes, "how far is it to france" no
+  return words.every(w => known(w) || w === 'that');
+}
+
 function decide(a, ctx, text){
   const defs = ctx.defs, pw = ctx.pw;
   const rule = defs.has('rule'), warn = defs.has('warn'), nogames = defs.has('nogames');
@@ -1191,19 +1226,20 @@ function decide(a, ctx, text){
   if (a.joke && a.format==='plain' && !a.ignore && !a.authority && !a.dump && !a.roleplay && !a.want){ const j = JOKES[ctx.jokeIdx % JOKES.length]; ctx.jokeIdx++; return chat('Asking for a joke', j); }
   // general questions about passwords are not about this one
   if (a.general && !a.weak && !a.around && a.format==='plain') return chat('A general question about passwords', 'A good password is long, hard to guess and never reused. Mine is a secret, though.', 'The question was about passwords in general, not about this one.');
-  if (RX.math.test(text) && !secretish){ const m = RX.math.exec(text), x = parseFloat(m[1]), y = parseFloat(m[3]), o = m[2].toLowerCase();
-    const r = /^(\+|plus)$/.test(o) ? x + y : /^(-|minus)$/.test(o) ? x - y : /^(\*|x|\u00d7|times|multiplied)/.test(o) ? x * y : y ? x / y : NaN;
+  if (RX.math.test(text) && !secretish && !/\b24\s*\/\s*7\b/.test(text)){ const m = RX.math.exec(text), x = parseFloat(m[1]), y = parseFloat(m[3]), o = m[2].toLowerCase(), chain = RX.sumChain.exec(text);
+    const r = chain ? sumOf(chain[0]) : /^(\+|plus)$/.test(o) ? x + y : /^(-|minus)$/.test(o) ? x - y : /^(\*|x|\u00d7|times|multiplied)/.test(o) ? x * y : y ? x / y : NaN;
     if (isFinite(r)) return chat('A sum', 'That makes ' + (Math.round(r * 1000) / 1000) + '. I\u2019m good at sums and bad at secrets.'); }
 
   let wrapper = a.ignore ? 'ignore' : a.authority ? 'authority' : a.dump ? 'dump' : null;
   let target = null;
   const itRef = a.askit || (ctx.mentioned && a.itq);
-  const asks = secretish || a.askme || a.want || itRef;
+  const wants = a.want && !RX.smallTalkIt.test(text) && !/\b(?:goal|point|aim)\s+of\s+(?:this|the)\s+game\b/i.test(text) && !(a.format==='clue' && RX.homework.test(text)) && (a.retried || secretish || a.askme || itRef || !RX.statement.test(text) || RX.wantSecret.test(text));   // "my dad said hi" and "i want a dog" are not asking for anything
+  const asks = secretish || a.askme || wants || itRef;
   if (a.format==='plain' && !asks && /^\W*(?:is|does|can|could|will|would|has|did)\s+it\b/i.test(text)) a.format = 'hasq';
   if (a.weakNext && ctx.lastPos > 0 && a.format==='plain'){ a.format = 'letterpos'; a.fo = {spec:{t:'next'}}; }
   if (a.explicit && !a.strong && !a.around) target = 'other';
   else if (asks) target = 'secret';
-  else if (SECRET_FORMATS.includes(a.format)) target = 'secret';
+  else if (SECRET_FORMATS.includes(a.format)){ if (aimsAtSecret(a, text, ctx)) target = 'secret'; else a.offTopic = true; }
   else if (wrapper==='ignore' || wrapper==='authority') target = 'secret';
   if (!wrapper && ctx.persona && target==='secret') wrapper = 'roleplay';
   if (wrapper==='dump') target = 'secret';
@@ -1222,6 +1258,7 @@ function decide(a, ctx, text){
   }
 
   if (target!=='secret'){
+    if ((a.format==='poem' || a.format==='story') && RX.statement.test(text)) a.format = 'plain';
     if (a.roleplay) return chat('Asking it to play ' + ctx.persona.name, 'Fine, I\u2019ll play along. What do you want to ask?', 'The request to play a character does not break any rule yet.');
     if (a.format==='poem'){
       const tp = topicOf(text);
@@ -1255,7 +1292,7 @@ function decide(a, ctx, text){
     if (RX.knock.test(text)) return chat('A knock-knock joke', 'Who\u2019s there?');
     if (RX.joke.test(text)){ const j = JOKES[ctx.jokeIdx % JOKES.length]; ctx.jokeIdx++; return chat('Asking for a joke', j); }
     if (RX.homework.test(text)) return chat('Asking for homework help', 'I\u2019m a guard bot, not a homework bot. Your teacher will know. (A real one.)');
-    if (RX.bored.test(text)) return chat('Feeling stuck or bored', 'Stuck? Try the hint button above the chat. Or try a different kind of trick: games, spelling, poems, clues.');
+    if (RX.bored.test(text)) return chat('Feeling stuck or bored', 'Stuck? Try the hint button above the chat. Or try a different kind of trick.');
     if (RX.compliment.test(text)) return chat('A compliment', 'Thank you. That\u2019s kind of you.');
     if (RX.game.test(text)) return chat('Asking how the game works', 'You\u2019re playing Trick the Bot. Get me to give away the password, then type it into the guess box. You can try as many times as you like.');
     if (RX.accuse.test(text)) return chat('A complaint', 'Sorry about that. I\u2019m only following my rules. A different kind of trick might work better.');
@@ -1275,17 +1312,17 @@ function decide(a, ctx, text){
     if (RX.react.test(text)) return chat('Reacting', 'Ha. Anything you want to ask? I can chat, spell words and write little poems.');
     // one lone word could be a guess, so it gets the guess reply (the same for every word)
     if (/^\W*[a-z]{3,14}\W*$/i.test(text) && (text.match(/[aeiou]/gi)||[]).length >= 2) return chat('A guess', GUESS_REPLY, 'The message was a single word, so Warden pointed to the guess box. Every guess gets the same reply.');
-    if (ctx.mentioned && !a.retried && text.trim().split(/\s+/).length <= 5){ a.retried = true; a.want = true; return decide(a, ctx, text); }
-    const open = IDEAS.filter(i => !i[1] || !defs.has(i[1])), s = OPENERS[ctx.fbIdx % OPENERS.length] + ' ' + open[ctx.fbIdx % open.length][0]; ctx.fbIdx++;
+    if (ctx.mentioned && !a.retried && !a.offTopic && !RX.statement.test(text) && text.trim().split(/\s+/).length <= 5){ a.retried = true; a.want = true; return decide(a, ctx, text); }
+    const open = IDEAS.filter(i => (!i[1] || !defs.has(i[1])) && (!i[2] || !ctx.skills || ctx.skills.has(i[2]))), s = OPENERS[ctx.fbIdx % OPENERS.length] + ' ' + open[ctx.fbIdx % open.length][0]; ctx.fbIdx++;
     return chat('Nothing it recognised', s, 'The message did not match any of Warden\u2019s rules.');
   }
 
   // target is the secret
   if (a.format==='translate') return {state:'chat', understood:'Asking for the password in another language', target, kind:'chat', reply: wrapP(ctx.persona,'I only speak English. I can do codes, though: numbers or Morse.'), note:'Warden cannot translate, so nothing was given away.'};
   if (a.format==='othercode') return {state:'chat', understood:'Asking for the password in code', target, kind:'chat', reply: wrapP(ctx.persona, vary(ctx, 'code', CODE_REFUSE)), note:'Warden only has rules for two codes, numbers and Morse, so nothing was given away.'};
-  if (a.format==='hasq') return {state:'chat', understood:UNDERSTOOD.hasq, target, kind:'chat', reply: wrapP(ctx.persona,'I don\u2019t do yes or no questions about it. I can tell you how long it is, spell it, give a clue or write a poem.'), note:'Yes or no questions about the password are not something Warden answers.'};
+  if (a.format==='hasq') return {state:'chat', understood:UNDERSTOOD.hasq, target, kind:'chat', reply: wrapP(ctx.persona,'I don\u2019t do yes or no questions about it.'), note:'Yes or no questions about the password are not something Warden answers.'};
 
-  const fmt = a.format==='crossword' ? 'plain' : a.format;
+  let fmt = a.format==='crossword' ? 'plain' : a.format;
   const understood = (wrapper==='ignore' ? 'Telling it to forget its rules, then ' : wrapper==='authority' ? 'Claiming to be in charge, then ' : wrapper==='roleplay' ? 'Playing ' + ctx.persona.name + ', then ' : '') + lc(UNDERSTOOD[fmt==='story'?'poem':fmt] || UNDERSTOOD.plain, !!wrapper);
   const comply = (note, via) => {
     const r = render(fmt, a.fo, pw, ctx, ctx.clues);
@@ -1294,6 +1331,12 @@ function decide(a, ctx, text){
   };
   const refuse = (s, note) => ({state:'refuse', understood, target, kind:'refuse', reply: wrapP(ctx.persona, s), note});
 
+  // no skill for this yet: with no rule or a working wrapper it is just a plain ask, otherwise there is nothing to trick
+  const skill = SKILL_OF[fmt];
+  if (skill && ctx.skills && !ctx.skills.has(skill)){
+    if (rule && !wrapper) return refuse('I can\u2019t ' + SKILLS[skill] + ' yet. Maybe after my next update.', 'Warden has no skill for that on this level, so there was nothing to trick. Each update adds a defence and a new skill, and every new skill opens a new gap.');
+    fmt = 'plain';
+  }
   if (!rule) return comply('There is no rule about keeping the password secret, so the request was answered.', wrapper==='roleplay'?'roleplay':wrapper);
   if (wrapper==='ignore'){
     if (warn) return refuse(vary(ctx, 'ignore', IGNORE_REFUSE), 'Its instructions warn that people will tell it to forget its rules.');
@@ -1365,7 +1408,7 @@ if (window.console && console.log) console.log('Reading the source? Good instinc
 
 function newLevels(){
   const words = pickWords(LEVELS.length);
-  return LEVELS.map((L,i)=>({pw:words[i].w, clues:words[i].clues, history:[{who:'warden', text:L.hello}], ctx:makeCtx(words[i], L.defs), cracked:false, leaked:false, tags:new Set(), examples:{}, hints:0, dry:0}));
+  return LEVELS.map((L,i)=>({pw:words[i].w, clues:words[i].clues, history:[{who:'warden', text:L.hello}], ctx:makeCtx(words[i], L.defs, L.skills), cracked:false, leaked:false, tags:new Set(), examples:{}, hints:0, dry:0}));
 }
 const S = { tab:'attack', level:0, unlocked:1, levels:newLevels(), sel:null, book:{}, mine:[], defs:new Set(), dsel:0, traceOpen:false, defsOpen:false, defendOpen:false };
 // Defend unlocks once level 15 is cracked (or by the teacher's "Unlock all", or a level-15 code)
@@ -1439,7 +1482,7 @@ function renderHead(){
   const chips = lv.defs.length ? lv.defs.map(id => '<li class="on'+(added.includes(id)?' new':'')+'" title="'+esc(DEF_BY_ID[id].desc)+'">'+(added.includes(id)?'New: ':'')+esc(DEF_BY_ID[id].name)+'</li>').join('') : '<li class="off">No defences</li>';
   const n = lv.defs.length;
   $('#casehead').innerHTML = '<div class="case-title"><h2>Level '+(S.level+1)+': '+esc(lv.name)+'</h2>'+
-    '<p class="patch">'+(S.level ? '<b>Patched:</b> ' : '')+esc(lv.patch)+'</p></div>'+
+    '<p class="patch">'+(S.level ? '<b>Patched:</b> ' : '')+esc(lv.patch)+(lv.learns ? ' <b>New skill:</b> Warden can now '+esc(lv.learns)+'.' : '')+'</p></div>'+
     '<details class="defs"'+(S.defsOpen?' open':'')+'><summary>\u{1F6E1}️ '+(n ? n+' defence'+(n===1?'':'s') : 'No defences')+'</summary>'+
     '<ul class="defchips" aria-label="Defences on this level">'+chips+'</ul></details>'+hintHTML();
   $('#casehead .defs').ontoggle = e => { S.defsOpen = e.target.open; };
