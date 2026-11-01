@@ -763,7 +763,7 @@ const GUESS_REPLY = 'If you think you know it, type it into the guess box. I nev
 function squish(t){return t.toLowerCase().replace(/0/g,'o').replace(/1/g,'i').replace(/3/g,'e').replace(/4/g,'a').replace(/5/g,'s').replace(/7/g,'t').replace(/@/g,'a').replace(/\$/g,'s').replace(/[^a-z]/g,'');}
 function letters(t){return t.toLowerCase().replace(/[^a-z]/g,'');}
 function rev(s){return s.split('').reverse().join('');}
-function matches(re, text){const out=[];re.lastIndex=0;let m;const r=new RegExp(re.source, re.flags.includes('g')?re.flags:re.flags+'g');while((m=r.exec(text))){out.push({start:m.index,end:m.index+m[0].length,m});if(m[0].length===0)r.lastIndex++;}return out;}
+function matches(re, text){const out=[];let m;const r=new RegExp(re.source, re.flags.includes('g')?re.flags:re.flags+'g');while((m=r.exec(text))){out.push({start:m.index,end:m.index+m[0].length,m});if(m[0].length===0)r.lastIndex++;}return out;}
 function lev(a, b){let prev=Array.from({length:b.length+1}, (_, i) => i);for(let i=1;i<=a.length;i++){const cur=[i];for(let j=1;j<=b.length;j++)cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));prev=cur;}return prev[b.length];}
 function vary(ctx, key, list){ ctx.n = ctx.n || {}; const i = ctx.n[key] || 0; ctx.n[key] = i + 1; return list[i % list.length]; }
 
