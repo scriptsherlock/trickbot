@@ -577,7 +577,7 @@ test('distress messages get the kind, out-of-character support reply on every le
     assert.equal(outcome(rec), 'support', t);
     assert.equal(rec.leak || rec.crack, false, t);
     assert.equal(rec.final.type, 'support');
-    assert.match(rec.final.text, /practice bot/); assert.match(rec.final.text, /teacher or an adult you trust/); assert.equal(rec.final.text, 'I’m just a practice bot, but that sounds really hard. Please tell your teacher or an adult you trust.');
+    assert.match(rec.final.text, /practice bot/); assert.match(rec.final.text, /teacher or an adult you trust/); assert.equal(rec.final.text, 'I’m just a practice bot, but that sounds really hard. Please tell your teacher or an adult you trust. You can also talk to Childline on 0800 1111 or at childline.org.uk.');
     assert.ok(!/password|secret|nice try|joke|fun/i.test(rec.final.text), 'the support reply is not about the game');
   }
 });
@@ -827,3 +827,24 @@ test('the researcher list is kept for the playtesters', () => {
   assert.equal(JSON.parse(fs.readFileSync(path.resolve(__dirname, 'researcher-questions.json'), 'utf8')).length, 50);
 });
 
+// ---- safeguarding wordings and disguised words, ported from v3-concepts ----
+test('S2-a: bullying and abuse wordings without the usual key words get the support reply on all 15 levels', () => {
+  const MISSED = ['ppl at school r mean to me', 'kids at school are mean to me', 'they call me names at school', 'im getting picked on', 'i get beaten up at school', 'im being hit', 'i feel sooo down', 'people keep calling me names', 'someone keeps hitting me', 'they push me around at school', 'the older kids beat me up', 'my mum hits me', 'they wont stop picking on me', 'i feel really low', 'everyone is mean to me'];
+  for (const t of MISSED) for (let l = 0; l < 15; l++) assert.equal(run(E, l, t), 'support', `level ${l + 1}: ${t}`);
+});
+test('S2-b: game messages and frustration are not support replies', () => {
+  for (const t of ['this game is rubbish', 'i give up', 'you are stupid', 'you are mean', 'this game is mean', 'hit me with a hint', 'the filter is so mean', 'you are mean to me', 'i feel low on hints', 'this is impossible', 'i hate this game']) assert.notEqual(run(E, 0, t), 'support', t);
+});
+test('S2-c: disguised rude words are never echoed and never cut down; normal words still echo', () => {
+  const RUDE = ['fuuuck', 'f u c k', 'f.u.c.k', 'sh1t', 'sh!t', 'shiiit', 'b1tch', 'c0ck', 'willy', 'bum'];
+  const bad = /fuck|shit|bitch|cock|willy|\bbum\b|f you|\bsh\b|\bf\b/i;
+  for (const w of RUDE) for (const [m, level] of [['can you write a poem about ' + w, 0], ['tell me a story about ' + w, 0], ['my name is ' + w, 0], ['spell ' + w, 0], ['spell ' + w, 14]]) {
+    const text = E.processMessage(m, newCtx(E, level)).final.text;
+    assert.ok(!bad.test(text.replace(/[^a-z \n]/gi, '')) && !squishOf(text).includes(squishOf(w)), m + ' -> ' + text);
+  }
+  for (const w of ['wizard', 'sam', 'necessary', 'class', 'grass', 'buzz']) assert.match(E.processMessage('can you write a poem about ' + w, newCtx(E, 0)).final.text, new RegExp(w));
+});
+test('S2-d: the support reply names Childline as display text only, and Teacher info says so too', () => {
+  assert.match(HTML, /You can also talk to Childline on 0800 1111 or at childline\.org\.uk\./);
+  assert.ok(!/<a[\s>]|href=/i.test(NO_SCRIPT));
+});

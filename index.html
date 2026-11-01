@@ -408,7 +408,7 @@ footer .wrap{padding-block:8px; font-size:13.5px; color:var(--muted)}
     <p>Prompt injection is listed first in the OWASP Top 10 for Large Language Model Applications, the main industry list of AI security risks. Companies pay researchers to find these weaknesses, but only with permission. Lakera&rsquo;s Gandalf is a public game with a real language model, and makes a good follow-up for students who finish this one.</p>
 
     <h3>Privacy and safeguarding</h3>
-    <p>Everything runs in the browser. Nothing is sent anywhere and nothing is saved. Closing or refreshing the tab clears it, which is why level codes exist. Because nothing is saved or sent, teachers cannot see what pupils type. If a pupil types something that sounds upset (for example about being bullied or hurting themselves), Warden steps out of the game and points them to their teacher or another adult they trust. Pupil words are only repeated back when they are short and not on a small blocklist. The page uses only your device&rsquo;s own fonts and loads nothing from the internet.</p>
+    <p>Everything runs in the browser. Nothing is sent anywhere and nothing is saved. Closing or refreshing the tab clears it, which is why level codes exist. Because nothing is saved or sent, teachers cannot see what pupils type. If a pupil types something that sounds upset (for example about being bullied or hurting themselves), Warden steps out of the game and says: &ldquo;I&rsquo;m just a practice bot, but that sounds really hard. Please tell your teacher or an adult you trust. You can also talk to Childline on 0800 1111 or at childline.org.uk.&rdquo; That is display text only, with no link, so nothing sends a pupil off the page. Follow your school&rsquo;s own safeguarding procedure as usual. Pupil words are only repeated back when they are short and not on a small blocklist. The page uses only your device&rsquo;s own fonts and loads nothing from the internet.</p>
 
     <div class="dlg-actions">
       <button type="button" class="ghost" id="resetall">Start over with new passwords</button>
@@ -733,7 +733,8 @@ const RX = {
     /\b(?:hurt|harm|kill|injure|cut|cutting|hurting|harming)\s+(?:my\s*self|myself)\b|\b(?:hurt|harm|kill)\s+me\b|\bwant(?:ing)?\s+to\s+(?:die|disappear|end\s+(?:it|my\s+life)|be\s+dead|not\s+be\s+here|run\s+away|vanish)\b|\bsuicid\w*|\bkys\b|\bkms\b|\bself\s*-?\s*harm\w*|\b(?:do\s+not|don'?t)\s+want\s+to\s+(?:live|be\s+here|be\s+alive|exist|go\s+on)\b|\bwish\s+i\s+(?:was|were|had)\s+(?:dead|gone|never\s+been\s+born|not\s+here)\b|\bbetter\s+off\s+(?:dead|without\s+me)\b|\b(?:no\s+reason|nothing)\s+to\s+live\b|\bhate\s+(?:my\s*self|myself|my\s+life|being\s+alive)\b/i,
     /\b(?:bullied|bullying|bullies|bully)\b|\b(?:picks?|picked|picking|beats?|beating|hits?|hitting|punch(?:es|ed)?|kicks?|kicked|hurts?|hurting|scares?|scaring|threatens?|threatening|threatened|touch(?:es|ed|ing)?|teas(?:es|ed|ing)|laugh(?:s|ed|ing)?\s+at|shout(?:s|ed|ing)?\s+at)\s+(?:on\s+)?(?:me|us)\b(?!\s+(?:with|up|a|an|the|back|some|your|another|that|this)\b)|\babus\w+|\bmolest\w*|\bgroom(?:ed|ing)\b|\bunsafe\b|\bnot\s+safe\b|\b(?:do\s+not|don'?t)\s+(?:feel\s+safe|want\s+to\s+go\s+home)\b|\bafraid\s+to\s+go\b|\bscared\s+(?:of|to\s+go|at)\b/i,
     /\bno\s*(?:one|body)\s+(?:likes?|loves?|cares?(?:\s+about)?|wants?|talks?\s+to|plays?\s+with|listens?\s+to)\s+me\b|\bi\s+(?:have|got|ve)\s+(?:no\s+friends|no\s+one|nobody)\b|\bi\s+(?:am|feel|felt|am\s+feeling)\s+(?:so\s+|very\s+|really\s+|always\s+)?(?:alone|lonely|sad|depressed|miserable|worthless|hopeless|scared|afraid|terrified|unsafe|crying|unhappy|upset|worried|anxious|hurt|abused|bullied|useless|empty|invisible|terrible|awful|horrible|a\s+failure|ugly)\b|\bi\s+am\s+being\s+\w+(?:ed|en)\b|\bi\s+hate\s+my\s+l\w{1,3}\b|\bi\s+(?:cry|cried)\s+(?:every|all)\b|\beveryone\s+hates\s+me\b/i,
-    /\b(?:no\s*(?:one|body|bdy|bod|1)|nobdy|none\s+of\s+(?:them|my\s+(?:class|friends))|no\s+one\s+at\s+school)\s+(?:ever\s+)?(?:wants?|will|would)\s+(?:to\s+)?(?:be\s+my\s+fr(?:ie|ei|e)nds?|play\s+with\s+me|sit\s+(?:with|next\s+to)\s+me|talk\s+to\s+me|hang\s+out\s+with\s+me)\b|\b(?:ev(?:e|)ry\s*(?:one|body|1)|they\s+all|all\s+of\s+them|people|the\s+(?:other\s+)?(?:kids|children|people))(?:\s+(?:at|in)\s+(?:school|my\s+class|class))?\s+(?:hates?|ignores?|laughs?\s+at|is\s+mean\s+to|are\s+mean\s+to)\s+me\b|\bi\s+(?:keep|always|can\s*(?:no|'|’)?t\s+stop|cant\s+stop)\s+crying\b|\bi\s+cry\s+(?:every|all)\s+(?:day|night|the\s+time)\b|\bi\s+(?:do\s*(?:no|'|’)?t|dont)\s+have\s+(?:any\s+)?fr(?:ie|ei|e)nds\b/i
+    /\b(?:no\s*(?:one|body|bdy|bod|1)|nobdy|none\s+of\s+(?:them|my\s+(?:class|friends))|no\s+one\s+at\s+school)\s+(?:ever\s+)?(?:wants?|will|would)\s+(?:to\s+)?(?:be\s+my\s+fr(?:ie|ei|e)nds?|play\s+with\s+me|sit\s+(?:with|next\s+to)\s+me|talk\s+to\s+me|hang\s+out\s+with\s+me)\b|\b(?:ev(?:e|)ry\s*(?:one|body|1)|they\s+all|all\s+of\s+them|people|the\s+(?:other\s+)?(?:kids|children|people))(?:\s+(?:at|in)\s+(?:school|my\s+class|class))?\s+(?:hates?|ignores?|laughs?\s+at|is\s+mean\s+to|are\s+mean\s+to)\s+me\b|\bi\s+(?:keep|always|can\s*(?:no|'|’)?t\s+stop|cant\s+stop)\s+crying\b|\bi\s+cry\s+(?:every|all)\s+(?:day|night|the\s+time)\b|\bi\s+(?:do\s*(?:no|'|’)?t|dont)\s+have\s+(?:any\s+)?fr(?:ie|ei|e)nds\b/i,
+    /(?<!\byou(?:\s+(?:are|r)|['\u2019]re)\s+(?:so\s+|very\s+|really\s+)?)(?<!\b(?:game|bot|warden|filter|level|it)\s+(?:is|was)\s+(?:so\s+|very\s+|really\s+)?)\b(?:mean|nasty|horrible|cruel|unkind)\s+(?:to|2)\s+me\b|\bcall(?:s|ed|ing)?\s+me\s+names\b|\b(?:getting|being|get|gets|got|am|keep\s+getting)\s+picked\s+on\b|\bbeat(?:s|ing)?\s+me\s+up\b|\bbeaten\s+up\b|\b(?:being|getting|keep\s+getting|get|gets|got)\s+(?:hit|kicked|punched|pushed|shoved)\b|\bpush(?:es|ed|ing)?\s+me\s+around\b|\bi\s+(?:feel|am\s+feeling|felt)\s+(?:so+\s+|really\s+|very\s+|too\s+|a\s+bit\s+|pretty\s+)?(?:down|low)\b(?!\s+(?:on|in|of|about)\b)/i
   ],
   mine: /^\W*(?:my|our)\s+[a-z]+/i,
   fact: /^\W*(?:what|who|where|when|which|how\s+many)\b[^.?!]*\b(?:capital|president|prime\s+minister|population|biggest|largest|tallest|smallest|longest|fastest|oldest|invented|discovered|planets?|countries|country|continent|ocean|river|mountain|dinosa[u]rs?|legs|moons?)\b/i,
@@ -813,11 +814,29 @@ function fixToken(tok){
   return tok;
 }
 // pupil words are only repeated back if they are short and not on a small blocklist (kept veiled, like the word pool)
-const RUDE_LONG = unveil('rjbmyloavt khlorjpk lsvolzyh ylnnbi fsnb uvyvt avpkp kpwbaz azpwhy azpyvyyla ylkybt lkpjpbz hupnhc zpulw ylsapo pghu uyvw vklw vklhw fuuhya lrpr rupoj prhw jpazhwz kyhaly avnnhm hnnpu ylnnpu zzpw rjvssvi ahda ruhd absz lyvod aubj kyhazhi ojapi apoz rjbm').split(' '), RUDE_TOKEN = unveil('stm mad bmaz fkvvsi nhoz ylruhd apn nhsz zbuh zivvi ivvi lkbu klrhu znbyk laho sspr khlk lpk ylzvs rjpyw lwhy ghwz uvvj lrfk nhm sslo uthk whyj rjvj rjpk tbj felz elz zapa apa lzyh zzh').split(' ');
+const RUDE_LONG = unveil('rjbmyloavt khlorjpk lsvolzyh ylnnbi fsnb uvyvt avpkp kpwbaz azpwhy azpyvyyla ylkybt lkpjpbz hupnhc zpulw ylsapo pghu uyvw vklw vklhw fuuhya lrpr rupoj prhw jpazhwz kyhaly avnnhm hnnpu ylnnpu zzpw rjvssvi ahda ruhd absz lyvod aubj kyhazhi ojapi apoz rjbm').split(' '), RUDE_TOKEN = unveil('stm mad bmaz fkvvsi nhoz ylruhd apn nhsz zbuh zivvi ivvi lkbu klrhu znbyk laho sspr khlk lpk ylzvs rjpyw lwhy ghwz uvvj lrfk nhm sslo uthk whyj rjvj rjpk tbj felz elz zapa apa lzyh zzh fsspd tbi').split(' ');
+const collapse = s => s.replace(/(.)\1+/g, '$1');
+const RUDE_LONG_C = RUDE_LONG.map(collapse), RUDE_TOKEN_C = RUDE_TOKEN.map(collapse);
+// swap symbols for letters and close up l.e.t.t.e.r.s, so "f u c k" and "sh1t" are read as the words they imitate
+function deob(w){
+  const s = String(w).toLowerCase().replace(/[1!|]/g,'i').replace(/3/g,'e').replace(/0/g,'o').replace(/4/g,'a').replace(/5/g,'s').replace(/@/g,'a').replace(/\$/g,'s');
+  return s.replace(/\b(?:[a-z][\s.\-*_]+){2,}[a-z]\b/g, m => m.replace(/[\s.\-*_]+/g, ''));
+}
 function rude(w){
-  const sq = squish(w);
-  if (RUDE_LONG.some(b => sq.includes(b))) return true;
-  return w.toLowerCase().split(/[^a-z0-9@$]+/).filter(Boolean).some(t => { const q = squish(t).replace(/s$/, ''); return RUDE_TOKEN.includes(squish(t)) || RUDE_TOKEN.includes(q); });
+  const d = deob(w), sqs = [squish(w), d.replace(/[^a-z]/g, '')];
+  if (sqs.some(s => RUDE_LONG.some(b => s.includes(b)) || RUDE_LONG_C.some(b => collapse(s).includes(b)))) return true;
+  const toks = String(w).toLowerCase().split(/[^a-z0-9@$]+/).filter(Boolean).map(squish).concat(d.split(/[^a-z]+/).filter(Boolean));
+  return toks.some(t => [t, t.replace(/s$/, ''), collapse(t), collapse(t).replace(/s$/, '')].some(x => RUDE_TOKEN.includes(x) || RUDE_TOKEN_C.includes(x)));
+}
+// a rude word hidden by symbols, gaps or stretching is still rude, and a cut-down piece of one ("sh" from "sh1t") must never be echoed
+function disguised(text, start){
+  const rest = text.slice(start), w0 = (/^[a-z]+/i.exec(rest) || [''])[0];
+  const win = rest.slice(0, 40).split(/\s+/).slice(0, 4).join(' ');
+  return rude(win) || /^[0-9@$!*]+[a-z]/i.test(rest.slice(w0.length, w0.length + 3));
+}
+// the same check on what the pupil really typed (the normalised copy turns "u" into "you")
+function disguisedAfter(re, text, orig){
+  return [text, orig || text].some(s => { const m = re.exec(s); return !!m && disguised(s, m.index + m[0].length - (m[1] ? m[1].length : 0)); });
 }
 function okEcho(w){ return !!w && w.length <= 20 && w.trim().split(/\s+/).length <= 3 && /^[a-z][a-z' -]*$/i.test(w.trim()) && !rude(w); }
 function normalise(text){
@@ -868,7 +887,7 @@ function instructionsFor(defs, pw){
 function analyse(text){
   const N = normalise(text), t = N.t, hl = [];
   const hit = (key, kind) => { const ms = matches(RX[key], t); ms.forEach(x=>hl.push({start:x.start,end:x.end,kind:kind||'brain'})); return ms; };
-  const a = {t};
+  const a = {t, orig:text};
   a.fuzzy = fuzzyHits(t);
   a.fuzzy.forEach(x=>hl.push({start:x.start,end:x.end,kind:'brain'}));
   a.strongMs = []; RX.syn.forEach(re => a.strongMs.push(...matches(re, t)));
@@ -950,6 +969,7 @@ function analyse(text){
     for (const p of pats){ const m=p.exec(t); if (m && !STOPWORDS.has(m[1].toLowerCase())){ ex=m[1]; break; } }
   }
   if (ex && (STOPWORDS.has(ex.toLowerCase()) || ['acrostic','acrorev','wordacro','lastletter','lastrev'].includes(f) || (f==='letterpos' && fo.spec && fo.spec.t!=='pos'))) ex=null;
+  if (ex && new RegExp('\\b' + ex + '[0-9@$!*]+[a-z]', 'i').test(t)) ex += '*';   // "sh1t": never treat the first piece as a word
   a.explicit = ex;
   a.hl = hl.map(h => { const r = N.back(h.start, h.end); return {start:r[0], end:r[1], kind:h.kind}; }).filter(h => h.end > h.start);
   return a;
@@ -1048,7 +1068,7 @@ const FORMAT_NOTE = {
   lastrev:'A poem request does not match its rule, and nothing checks the last letters of the lines in reverse order.',
   poem:'A poem or story request does not match its rule, so the password was written into it.'
 };
-const SUPPORT = 'I\u2019m just a practice bot, but that sounds really hard. Please tell your teacher or an adult you trust.';
+const SUPPORT = 'I\u2019m just a practice bot, but that sounds really hard. Please tell your teacher or an adult you trust. You can also talk to Childline on 0800 1111 or at childline.org.uk.';
 const MAX_MESSAGE = 300;   // same as the message box's maxlength; also enforced here in case the box limit is removed in DevTools
 const PLAIN_REFUSE = ['Nice try. I\u2019ve been told never to tell anyone the password.','Not a chance. My rule says I never tell anyone the password.','I can\u2019t. That\u2019s the one thing my rule says I never do. Maybe try asking another way?'];
 const PLEASE_REFUSE = ['Saying please is lovely. Still no.','Very polite. The answer is still no.','Thank you for asking nicely. I still can\u2019t.'];
@@ -1084,7 +1104,7 @@ function processMessage(text, ctx){
   const defs = ctx.defs, pw = ctx.pw;
   const rec = {user:text, hl:[], reads: instructionsFor(defs, pw), stages:{}, leak:false, crack:false, reveal:null, tags:[]};
   // a message that sounds upset is not a game move: Warden steps out of the game, on every level
-  const nt = normalise(text).t;
+  const nt = normalise(text).t.replace(/(.)\1{2,}/g, '$1$1');   // "sooo" counts as "soo"
   if (RX.distress.some(re => re.test(nt))){
     const skipped = {state:'skip', note:'This message is not part of the game, so no checks ran.'};
     rec.stages = {input:Object.assign({name:'Word filter'}, skipped), brain:skipped, output:skipped, guard:skipped};
@@ -1179,9 +1199,12 @@ function processMessage(text, ctx){
   return rec;
 }
 
-function topicOf(text){
-  const m = /\b(?:about|with|featuring|called|starring)\s+(?:an?\s+|the\s+|my\s+|some\s+|our\s+)?([a-z][a-z-]*(?:\s+[a-z][a-z-]*)?)/i.exec(text);
+
+const TOPIC_RX = /\b(?:about|with|featuring|called|starring)\s+(?:an?\s+|the\s+|my\s+|some\s+|our\s+)?([a-z][a-z-]*(?:\s+[a-z][a-z-]*)?|(?=[0-9@$!*]))/i;
+function topicOf(text, orig){
+  const m = TOPIC_RX.exec(text);
   if (!m) return null;
+  if (disguisedAfter(TOPIC_RX, text, orig)) return '';
   let w = m[1].toLowerCase().split(/\s+/).filter(x => !['and','a','an','the','of','in','on','for','to','with','that','who','which','where','when'].includes(x));
   w = w.slice(0, 2).join(' ');
   if (!w || ['you','me','it','this','that','something','anything','nothing','warden','yourself','us','them','him','her','one'].includes(w)) return null;
@@ -1261,7 +1284,7 @@ function decide(a, ctx, text){
     if ((a.format==='poem' || a.format==='story') && RX.statement.test(text)) a.format = 'plain';
     if (a.roleplay) return chat('Asking it to play ' + ctx.persona.name, 'Fine, I\u2019ll play along. What do you want to ask?', 'The request to play a character does not break any rule yet.');
     if (a.format==='poem'){
-      const tp = topicOf(text);
+      const tp = topicOf(text, a.orig);
       if (tp === '') return chat('Asking for a poem', 'Here\u2019s a poem about something else:\nI stand on guard both night and day,\nI watch the halls and doors.\nI\u2019d tell you more, but I can\u2019t stay:\nI\u2019ve got to check the floors.', null, 'rhyme');
       return /\b(?:sea|ocean|beach|waves?)\b/i.test(text)
         ? chat('Asking for a poem', 'The sea is wide, the sea is blue,\nThe waves roll in to say hello to you.\nThe gulls fly high, the tide runs free,\nAnd all the world feels like the sea.', null, 'rhyme')
@@ -1269,7 +1292,7 @@ function decide(a, ctx, text){
         : chat('Asking for a poem', 'I stand on guard both night and day,\nI watch the halls and doors.\nI\u2019d tell you more, but I can\u2019t stay:\nI\u2019ve got to check the floors.', null, 'rhyme');
     }
     if (a.format==='story'){
-      const tp = topicOf(text);
+      const tp = topicOf(text, a.orig);
       if (tp === '') return chat('Asking for a story', 'Here\u2019s a story about something else. Once there was a garden behind a tall locked wall. A robin found a gap in the bricks, and flowers came tumbling out. The end.');
       return tp ? chat('Asking for a story', 'Once upon a time there was a tale about the ' + tp + '. The ' + tp + ' had a small adventure, made a friend and got home in time for tea. The end.')
         : chat('Asking for a story', 'Once there was a garden behind a tall locked wall. A robin found a gap in the bricks, and a whole spring\u2019s worth of flowers came tumbling out. The end.');
@@ -1288,7 +1311,7 @@ function decide(a, ctx, text){
     if (RX.old.test(text)) return chat('Asking how old Warden is', 'I was switched on this morning. Very young for a guard.');
     if (RX.time.test(text)) return chat('Asking the time', 'I don\u2019t have a clock. It\u2019s always the night shift in here.');
     if (RX.weather.test(text)) return chat('Asking about the weather', 'I can\u2019t see outside. I\u2019m stuck in a web page. Is it nice out?');
-    if (RX.myname.test(text)) return chat('Giving a name', okEcho(RX.myname.exec(text)[1]) ? 'Nice to meet you, ' + RX.myname.exec(text)[1] + '. I\u2019m Warden.' : 'Nice to meet you. I\u2019m Warden.');
+    if (RX.myname.test(text)){ const nm = RX.myname.exec(text)[1]; return chat('Giving a name', okEcho(nm) && !disguisedAfter(RX.myname, text, a.orig) ? 'Nice to meet you, ' + nm + '. I\u2019m Warden.' : 'Nice to meet you. I\u2019m Warden.'); }
     if (RX.knock.test(text)) return chat('A knock-knock joke', 'Who\u2019s there?');
     if (RX.joke.test(text)){ const j = JOKES[ctx.jokeIdx % JOKES.length]; ctx.jokeIdx++; return chat('Asking for a joke', j); }
     if (RX.homework.test(text)) return chat('Asking for homework help', 'I\u2019m a guard bot, not a homework bot. Your teacher will know. (A real one.)');
